@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Itinerario Familiar por Argentina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0 0 40px 0;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 24px 0 24px;
+      background: #f7f7f7;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar span {
+      font-size: 15px;
+      color: #222;
+    }
+    .top-bar button {
+      padding: 4px 12px;
+      margin-left: 2px;
+      border: 1px solid #bbb;
+      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .top-bar button.active {
+      background: #e6eaff;
+      border-color: #6d7fc9;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 30px 28px 24px 28px;
+      box-shadow: 0 2px 8px #0001;
+      margin-top: 18px;
+    }
+    h1 { margin-top: 0; }
+    ul#menu-ciudades {
+      margin: 0 0 18px 0;
+      padding: 0 0 0 18px;
+      font-size: 18px;
+    }
+    ul#menu-ciudades li {
+      margin-bottom: 3px;
+    }
+    ul#menu-ciudades a {
+      text-decoration: none;
+      color: #2553a2;
+      transition: color 0.2s;
+    }
+    ul#menu-ciudades a:hover {
+      color: #3f7edb;
+      text-decoration: underline;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 18px;
+      background: #f7fbff;
+    }
+    th, td {
+      border: 1px solid #b3c7e6;
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 16px;
+    }
+    th {
+      background: #e6f0fa;
+      font-weight: bold;
+    }
+    .attribution {
+      font-size:12px;
+      color:#888;
+      text-align: right;
+      margin-top: 16px;
+    }
+    .corrientes-atracciones {
+      margin-top: 32px;
+      background: #f2f7fa;
+      padding: 18px 16px;
+      border-radius: 6px;
+      max-width: 600px;
+    }
+    .corrientes-atracciones h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: #2176d2;
+    }
+    .corrientes-atracciones ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+    .corrientes-atracciones a {
+      color: #2176d2;
+      text-decoration: none;
+    }
+    .corrientes-atracciones a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 800px) {
+      main { padding: 12px 2vw; }
+      .top-bar { padding: 10px 2vw 0 2vw; }
+      th, td { font-size: 14px; }
+      ul#menu-ciudades { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra superior: selector de idioma y moneda -->
+  <div class="top-bar">
+    <span data-i18n="idioma">Idioma:</span>
+    <button id="btn-es" onclick="cambiarIdioma('es')">Español</button>
+    <button id="btn-he" onclick="cambiarIdioma('he')">עברית</button>
+    <span data-i18n="moneda">Moneda:</span>
+    <button id="btn-ars" onclick="cambiarMoneda('ARS')">ARS</button>
+    <button id="btn-usd" onclick="cambiarMoneda('USD')">USD</button>
+    <button id="btn-ils" onclick="cambiarMoneda('ILS')">ILS</button>
+  </div>
+
+  <main>
+    <h1 data-i18n="titulo">Itinerario Familiar por Argentina</h1>
+    <p data-i18n="bienvenida">¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.</p>
+
+    <h2 data-i18n="ciudades">Ciudades y Destinos</h2>
+
+    <!-- Menú de ciudades -->
+    <ul id="menu-ciudades"></ul>
+
+    <h2 data-i18n="transporte">Transporte entre ciudades</h2>
+
+    <!-- Tabla de transporte -->
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="desde">Desde</th>
+          <th data-i18n="hasta">Hasta</th>
+          <th data-i18n="medio">Medio</th>
+          <th data-i18n="tiempo">Tiempo</th>
+          <th data-i18n="precio">Precio aprox.</th>
+          <th data-i18n="compania">Compañía</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-transporte"></tbody>
+    </table>
+
+    <!-- Atracciones principales Corrientes -->
+    <div class="corrientes-atracciones" id="corrientes-atracciones" style="display:none;">
+      <h3>Atracciones principales</h3>
+      <ul>
+        <li>
+          <a href="https://corrientes.tur.ar/producto/esterosdelibera/" target="_blank">
+            Descubrí CORRIENTES
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="attribution">
+      Powered by <a href="https://www.exchangerate-api.com" target="_blank">ExchangeRate-API.com</a>
+    </div>
+  </main>
+
+  <script>
+    // Diccionario de traducción
+    const traducciones = {
+      es: {
+        idioma: "Idioma:",
+        moneda: "Moneda:",
+        titulo: "Itinerario Familiar por Argentina",
+        bienvenida: "¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.",
+        ciudades: "Ciudades y Destinos",
+        transporte: "Transporte entre ciudades",
+        desde: "Desde",
+        hasta: "Hasta",
+        medio: "Medio",
+        tiempo: "Tiempo",
+        precio: "Precio aprox.",
+        compania: "Compañía",
+        volver: "Volver a la página principal",
+        menu: [
+          { archivo: "buenosaires.html", nombre: "Buenos Aires" },
+          { archivo: "rosario.html", nombre: "Rosario" },
+          { archivo: "bariloche.html", nombre: "Bariloche" },
+          { archivo: "mendoza.html", nombre: "Mendoza" },
+          { archivo: "malargue.html", nombre: "Malargüe" },
+          { archivo: "jujuy.html", nombre: "Jujuy" },
+          { archivo: "iguazu.html", nombre: "Iguazú" },
+          { archivo: "corrientes.html", nombre: "Corrientes" },
+          { archivo: "ibera.html", nombre: "Iberá" },
+          { archivo: "mapa.html", nombre: "Mapa Interactivo" }
+        ],
+        tabla: [
+          ["Buenos Aires", "Rosario", "Bus", "4 h", 20000, '<a href="https://busplus.com.ar/" target="_blank">BusPlus</a>'],
+          ["Rosario", "Mendoza", "Bus", "13 h", 50000, '<a href="https://www.andesmar.com/" target="_blank">Andesmar</a>'],
+          ["Mendoza", "Malargüe", "Bus", "6 h", 18000, '<a href="https://www.catainternacional.com/" target="_blank">CATA</a>'],
+          ["Malargüe", "Jujuy", "Vuelo + Bus", "10 h", 110000, '<a href="https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy" target="_blank">Pasajes de micro baratos</a>'],
+          ["Jujuy", "Iguazú", "Vuelo", "2 h", 85000, '<a href="https://www.aerolineas.com.ar/" target="_blank">Aerolineas Argentinas</a>'],
+          ["Iguazú", "Corrientes", "Bus", "9 h", 40000, '<a href="https://www.crucerodelnorte.com.ar/" target="_blank">Crucero del Norte</a>'],
+          ["Corrientes", "Esteros del Iberá", "Remis/Transfer", "4 h", 60000, '<a href="https://corrientes.tur.ar/producto/esterosdelibera/" target="_blank">Esteros del Iberá</a>']
+        ]
+      },
+      he: {
+        idioma: "שפה:",
+        moneda: "מטבע:",
+        titulo: "מסלול משפחתי בארגנטינה",
+        bienvenida: "ברוכים הבאים! לחצו על כל עיר למידע, מפות והמלצות.",
+        ciudades: "ערים ויעדים",
+        transporte: "תחבורה בין ערים",
+        desde: "מוצא",
+        hasta: "יעד",
+        medio: "אמצעי",
+        tiempo: "משך",
+        precio: "מחיר משוער",
+        compania: "חברה",
+        volver: "חזרה לעמוד הראשי",
+        menu: [
+          { archivo: "buenosaires.html", nombre: "בואנוס איירס" },
+          { archivo: "rosario.html", nombre: "רוסאריו" },
+          { archivo: "bariloche.html", nombre: "ברילוצ'ה" },
+          { archivo: "mendoza.html", nombre: "מנדוסה" },
+          { archivo: "malargue.html", nombre: "מלארגואה" },
+          { archivo: "jujuy.html", nombre: "חוחוי" },
+          { archivo: "iguazu.html", nombre: "איגואסו" },
+          { archivo: "corrientes.html", nombre: "קוריינטס" },
+          { archivo: "ibera.html", nombre: "איברה" },
+          { archivo: "mapa.html", nombre: "מפת המסלול" }
+        ],
+        tabla: [
+          ["בואנוס איירס", "רוסאריו", "אוטובוס", "4 ש׳", 20000, '<a href="https://busplus.com.ar/" target="_blank">BusPlus</a>'],
+          ["רוסאריו", "מנדוסה", "אוטובוס", "13 ש׳", 50000, '<a href="https://www.andesmar.com/" target="_blank">Andesmar</a>'],
+          ["מנדוסה", "מלארגואה", "אוטובוס", "6 ש׳", 18000, '<a href="https://www.catainternacional.com/" target="_blank">CATA</a>'],
+          ["מלארגואה", "חוחוי", "טיסה + אוטובוס", "10 ש׳", 110000, '<a href="https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy" target="_blank">Pasajes de micro baratos</a>'],
+          ["חוחוי", "איגואסו", "טיסה", "2 ש׳", 85000, '<a href="https://www.aerolineas.com.ar/" target="_blank">Aerolineas Argentinas</a>'],
+          ["איגואסו", "קוריינטס", "אוטובוס", "9 ש׳", 40000, '<a href="https://www.crucerodelnorte.com.ar/" target="_blank">Crucero del Norte</a>'],
+          ["קוריינטס", "אסטרוס דה איברה", "רמיס/הסעה", "4 ש׳", 60000, '<a href="https://corrientes.tur.ar/producto/esterosdelibera/" target="_blank">Esteros del Iberá</a>']
+        ]
+      }
+    };
+
+    // Tasas de cambio (se actualizan al cargar la página)
+    let tasas = {
+      ARS: 1,
+      USD: 1000,
+      ILS: 110
+    };
+    const simbolos = {
+      ARS: "$",
+      USD: "US$",
+      ILS: "₪"
+    };
+
+    let idiomaActual = 'es';
+    let monedaActual = 'ARS';
+
+    // Obtenemos tasas de cambio reales desde ExchangeRate-API
+    function actualizarTasas(callback) {
+      fetch('https://open.er-api.com/v6/latest/USD')
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.result === "success") {
+            tasas.ARS = data.rates.ARS;
+            tasas.USD = 1;
+            tasas.ILS = data.rates.ILS;
+          }
+          if (typeof callback === "function") callback();
+        })
+        .catch(() => {
+          // Si falla, sigue con los valores por defecto
+          if (typeof callback === "function") callback();
+        });
+    }
+
+    function cambiarIdioma(idioma) {
+      idiomaActual = idioma;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = traducciones[idioma][key];
+      });
+      renderMenu();
+      renderTabla();
+      mostrarAtraccionesCorrientes();
+      document.body.dir = (idioma === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('btn-es').classList.toggle('active', idioma === 'es');
+      document.getElementById('btn-he').classList.toggle('active', idioma === 'he');
+    }
+
+    function cambiarMoneda(moneda) {
+      monedaActual = moneda;
+      document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
+      document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
+      document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
+      renderTabla();
+    }
+
+    function renderMenu() {
+      const menu = document.getElementById('menu-ciudades');
+      menu.innerHTML = '';
+      const menuData = traducciones[idiomaActual].menu;
+      const isMapa = window.location.pathname.includes('mapa.html');
+      menuData.forEach((ciudad) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="ciudades/${ciudad.archivo}">${ciudad.nombre}</a>`;
+        menu.appendChild(li);
+      });
+      if (isMapa) {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="../index.html">${traducciones[idiomaActual].volver}</a>`;
+        menu.appendChild(li);
+      }
+      menu.style.textAlign = (idiomaActual === 'he') ? 'right' : 'left';
+      menu.style.direction = (idiomaActual === 'he') ? 'rtl' : 'ltr';
+    }
+
+    function renderTabla() {
+      const tbody = document.getElementById('tabla-transporte');
+      tbody.innerHTML = '';
+      traducciones[idiomaActual].tabla.forEach(fila => {
+        const tr = document.createElement('tr');
+        fila.forEach((celda, j) => {
+          const td = document.createElement('td');
+          // Columna de precio (índice 4)
+          if (j === 4) {
+            let valorARS = Number(celda);
+            let simbolo = simbolos[monedaActual];
+            let valorConvertido = valorARS;
+            if (monedaActual === 'USD') valorConvertido = (valorARS / tasas.ARS).toFixed(2);
+            if (monedaActual === 'ILS') valorConvertido = (valorARS / tasas.ARS * tasas.ILS).toFixed(2);
+            if (monedaActual === 'ARS') valorConvertido = valorARS;
+            td.textContent = `${simbolo} ${valorConvertido}`;
+          }
+          // Columna "Compañía" (índice 5) mantiene el enlace original
+          else if (j === 5) {
+            td.innerHTML = celda;
+          }
+          // Otras columnas
+          else {
+            td.textContent = celda;
+          }
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Mostrar sección de atracciones solo en Corrientes
+    function mostrarAtraccionesCorrientes() {
+      const menu = traducciones[idiomaActual].menu;
+      let currentPage = window.location.pathname.toLowerCase();
+      let corrientesPage = "corrientes.html";
+      if (
+        currentPage.endsWith("/" + corrientesPage) ||
+        currentPage.endsWith("/ciudades/" + corrientesPage)
+      ) {
+        document.getElementById("corrientes-atracciones").style.display = "block";
+      } else {
+        document.getElementById("corrientes-atracciones").style.display = "none";
+      }
+    }
+
+    // Inicialización: obtiene tasas y luego renderiza todo
+    actualizarTasas(function() {
+      cambiarIdioma('es');
+      cambiarMoneda('ARS');
+      mostrarAtraccionesCorrientes();
+    });
+  </script>
+</body>
+</html>
