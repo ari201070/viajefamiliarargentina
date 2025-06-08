@@ -1,0 +1,56 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+*.log
+*.tsbuildinfo
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Generated files and local configuration
+dist/
+build/
+.env
+.env.local
+.env.*.local
+*.local
+
+# Cache and temporary files
+.cache/
+tmp/
+temp/
+
+# Empty directories placeholder (if not using .gitkeep for some reason)
+# !.gitkeep
+
+# Operating System files
+._*
+._*
+
+# Other
+*.zip
+*.tar.gz
+*.rar
