@@ -93,7 +93,8 @@ La gastronomía jujeña es una fusión de sabores andinos y criollos, con platos
 ## Presupuesto orientativo
 
 | Concepto                      | Precio estimado (USD) |
-|-------------------------------|:--------------------:|| Alojamiento (noche, familia)  | 40–110               |
+|-------------------------------|:--------------------:|
+| Alojamiento (noche, familia)  | 40–110               |
 | Comida (por día, familia)     | 25–65                |
 | Transporte local (por día)    | 5–20                 |
 | Actividades y tours (por día) | 15–50                |

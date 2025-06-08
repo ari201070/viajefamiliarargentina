@@ -95,7 +95,8 @@ La gastronomía en Puerto Iguazú ofrece una mezcla de cocina regional (pescados
 ## Presupuesto orientativo
 
 | Concepto                      | Precio estimado (USD) |
-|-------------------------------|:--------------------:|| Alojamiento (noche, familia)  | 60–150               |
+|-------------------------------|:--------------------:|
+| Alojamiento (noche, familia)  | 60–150               |
 | Comida (por día, familia)     | 30–75                |
 | Transporte local (por día)    | 5–20                 |
 | Actividades y tours (por día) | 30–80                |

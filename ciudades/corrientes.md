@@ -94,7 +94,8 @@ La gastronomía correntina está fuertemente influenciada por el río, con plato
 ## Presupuesto orientativo
 
 | Concepto                      | Precio estimado (USD) |
-|-------------------------------|:--------------------:|| Alojamiento (noche, familia)  | 40–100               |
+|-------------------------------|:--------------------:|
+| Alojamiento (noche, familia)  | 40–100               |
 | Comida (por día, familia)     | 25–60                |
 | Transporte local (por día)    | 3–10                 |
 | Actividades y tours (por día) | 10–40                |

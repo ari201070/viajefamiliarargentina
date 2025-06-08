@@ -94,7 +94,8 @@ La gastronomía de Bariloche es famosa por sus chocolates, carnes de caza (cierv
 ## Presupuesto orientativo
 
 | Concepto                      | Precio estimado (USD) |
-|-------------------------------|:--------------------:|| Alojamiento (noche, familia)  | 70–180               |
+|-------------------------------|:--------------------:|
+| Alojamiento (noche, familia)  | 70–180               |
 | Comida (por día, familia)     | 40–90                |
 | Transporte local (por día)    | 5–15                 |
 | Actividades y tours (por día) | 30–80                |

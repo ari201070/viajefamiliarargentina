@@ -92,7 +92,8 @@ La gastronomía en Iberá se basa en la cocina casera y regional, con ingredient
 ## Presupuesto orientativo
 
 | Concepto                      | Precio estimado (USD) |
-|-------------------------------|:--------------------:|| Alojamiento (noche, familia)  | 70–200+ (incl. excursiones/comidas) |
+|-------------------------------|:--------------------:|
+| Alojamiento (noche, familia)  | 70–200+ (incl. excursiones/comidas) |
 | Comida (por día, familia)     | Incluido en posada (generalmente) |
 | Transporte local (por día)    | 0–10 (dentro del pueblo) |
 | Actividades y tours (por día) | 50–100+ (según excursiones) |
