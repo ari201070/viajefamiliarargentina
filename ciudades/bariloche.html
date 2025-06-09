@@ -47,7 +47,7 @@
 
     <div class="container">
         <img src="../docs/imagenes/bariloche/emilio-lujan-HhobdGoYzaA-unsplash.jpg" alt="Foto de portada de Bariloche" class="cover-image" data-i18n-alt="foto-caption">
-
+        
         <section id="welcome">
             <p data-i18n="welcome-text">San Carlos de Bariloche, la capital de los Lagos...</p>
         </section>
@@ -87,7 +87,7 @@
         <section id="gastronomy">
             <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
             <p data-i18n="gastronomy-intro">La gastronomía de Bariloche es famosa...</p>
-
+            
             <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
             <table>
                 <thead>
@@ -158,7 +158,7 @@
                 </tbody>
             </table>
         </section>
-
+        
         <section id="ai-menu-generator" class="ai-section">
             <h3 data-i18n="ai-menu-title">Generador de Menú Saludable ✨</h3>
             <p data-i18n="ai-menu-description">Obtén sugerencias de menú...</p>
@@ -172,7 +172,7 @@
             <button onclick="callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response')" data-i18n="generate-accommodation-button">Generar Sugerencias</button>
             <div id="ai-accommodation-response" class="ai-response"></div>
         </section>
-
+        
         <section id="ai-family-tips" class="ai-section">
             <h3 data-i18n="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h3>
             <p data-i18n="ai-family-tips-description">Recibe consejos personalizados...</p>
@@ -250,7 +250,7 @@
 
         <section id="map">
             <h2 data-i18n="map-title">Mapa de Bariloche</h2>
-            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-71.5333%2C-41.2005%2C-71.0729%2C-41.0656&layer=mapnik"
+            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-71.5333%2C-41.2005%2C-71.0729%2C-41.0656&layer=mapnik" 
                     style="border: 1px solid black; width:100%; height: 400px;"
                     allowfullscreen></iframe>
             <br/>
@@ -266,27 +266,27 @@
         let idiomaActual = localStorage.getItem('idiomaPreferido') || 'es';
         let monedaActual = localStorage.getItem('monedaPreferida') || 'ARS'; // Added to store current currency
         let currentTranslations = {};
-        const currentPageKey = 'bariloche';
+        const currentPageKey = 'bariloche'; 
 
         // Updated tasasDeCambio and simbolosMoneda
         const tasasDeCambio = { // Base: 1 unit of the key currency
-            ARS: { USD: 0.0011, EUR: 0.0010, ILS: 0.0041, ARS: 1 },
-            USD: { ARS: 900, EUR: 0.92, ILS: 3.70, USD: 1 },
-            EUR: { ARS: 980, USD: 1.08, ILS: 4.00, EUR: 1 },
-            ILS: { ARS: 245, USD: 0.27, EUR: 0.25, ILS: 1 }
+            ARS: { USD: 0.0011, EUR: 0.0010, ILS: 0.0041, ARS: 1 }, 
+            USD: { ARS: 900, EUR: 0.92, ILS: 3.70, USD: 1 },       
+            EUR: { ARS: 980, USD: 1.08, ILS: 4.00, EUR: 1 },       
+            ILS: { ARS: 245, USD: 0.27, EUR: 0.25, ILS: 1 }        
         };
         const simbolosMoneda = { ARS: '$', USD: 'US$', EUR: '€', ILS: '₪' };
 
         async function translatePage(language) {
           idiomaActual = language;
-          document.documentElement.lang = language;
+          document.documentElement.lang = language; 
           document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
 
           try {
             const response = await fetch(`../locales/${language}.json`);
             if (!response.ok) {
               console.error(`Error loading translation file for ${language}: ${response.statusText}`);
-              currentTranslations = {};
+              currentTranslations = {}; 
             } else {
               currentTranslations = await response.json();
             }
@@ -297,7 +297,7 @@
 
           if (currentTranslations[currentPageKey] && currentTranslations[currentPageKey]["page-title"]) {
             document.title = currentTranslations[currentPageKey]["page-title"];
-          } else if (currentTranslations.common && currentTranslations.common["page-title"]) {
+          } else if (currentTranslations.common && currentTranslations.common["page-title"]) { 
              document.title = currentTranslations.common["page-title"];
           }
 
@@ -305,7 +305,7 @@
           document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             let textValue;
-
+            
             let keyParts = key.split('.');
             if (keyParts.length === 2 && currentTranslations[keyParts[0]] && typeof currentTranslations[keyParts[0]][keyParts[1]] !== 'undefined') {
                 textValue = currentTranslations[keyParts[0]][keyParts[1]];
@@ -314,7 +314,7 @@
             } else if (currentTranslations.common && typeof currentTranslations.common[key] !== 'undefined') {
               textValue = currentTranslations.common[key];
             } else {
-              textValue = key;
+              textValue = key; 
             }
 
             if (el.hasAttribute('data-i18n-alt')) {
@@ -327,10 +327,10 @@
                     el.alt = altKey;
                 }
             }
-
+            
             const elementsToUseInnerHTML = ['event-', 'stay-duration', 'how-to-arrive', 'welcome-text', 'gastronomy-intro', 'ai-menu-description', 'ai-accommodation-description', 'ai-family-tips-description', 'ai-budget-description'];
             if (elementsToUseInnerHTML.some(substring => key.includes(substring))) {
-              el.innerHTML = textValue;
+              el.innerHTML = textValue; 
             } else {
               el.textContent = textValue;
             }
@@ -341,10 +341,10 @@
           localStorage.setItem('idiomaPreferido', language);
         }
 
-        function cambiarMoneda() {
-          monedaActual = document.getElementById('moneda').value;
+        function cambiarMoneda() { 
+          monedaActual = document.getElementById('moneda').value; 
           localStorage.setItem('monedaPreferida', monedaActual);
-
+          
           const precioSpan = document.getElementById('precio-en-moneda-seleccionada');
           if (precioSpan) {
               // This is an example placeholder. Actual price updates would need more logic.
@@ -355,7 +355,7 @@
               precioSpan.textContent = `${simbolosMoneda[monedaActual]}`; // Just show symbol for now
           }
         }
-
+        
         async function callGeminiAPI(promptKey, responseDivId) {
             const responseDiv = document.getElementById(responseDivId);
             const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
@@ -374,11 +374,11 @@
 
             if (!promptText) {
                 const errorMsgKey = "ai-error";
-                let translatedError = "Error: Prompt not found.";
+                let translatedError = "Error: Prompt not found."; 
                 if(currentTranslations.common && currentTranslations.common[errorMsgKey]) {
                     translatedError = currentTranslations.common[errorMsgKey];
                 }
-                if(currentTranslations[currentPageKey] && currentTranslations[currentPageKey][errorMsgKey]) {
+                if(currentTranslations[currentPageKey] && currentTranslations[currentPageKey][errorMsgKey]) { 
                     translatedError = currentTranslations[currentPageKey][errorMsgKey];
                 }
                 responseDiv.textContent = translatedError + ` (Prompt ${promptKey} missing for ${currentLanguage})`;
