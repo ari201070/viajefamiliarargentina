@@ -9,11 +9,11 @@
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
         header { background-color: #004080; color: white; padding: 1em 0; text-align: center; }
         header h1 { margin: 0; }
-        nav { position: fixed; top: 10px; right: 10px; background-color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav { position: fixed; top: 10px; right: 10px; background-color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000; /* Ensure nav is on top */}
         nav button, nav select, nav a { margin-left: 5px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; background-color: #f0f0f0; cursor: pointer; }
         nav button.active { background-color: #007bff; color: white; }
         nav a { text-decoration: none; color: #333; }
-        .container { padding: 20px; max-width: 900px; margin: 20px auto; background-color: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .container { padding: 20px; max-width: 900px; margin: 80px auto 20px auto; /* Adjusted margin-top for fixed nav */ background-color: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         h2 { color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 5px; }
         .cover-image { width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
@@ -33,8 +33,8 @@
     </header>
 
     <nav>
-        <button id="btn-es">ES</button>
-        <button id="btn-he">HE</button>
+        <button id="btn-es" onclick="translatePage('es')">ES</button>
+        <button id="btn-he" onclick="translatePage('he')">HE</button>
         <select id="moneda" onchange="cambiarMoneda()">
             <option value="ARS">ARS</option>
             <option value="USD">USD</option>
@@ -264,20 +264,22 @@
 
     <script>
         let idiomaActual = localStorage.getItem('idiomaPreferido') || 'es';
+        let monedaActual = localStorage.getItem('monedaPreferida') || 'ARS'; // Added to store current currency
         let currentTranslations = {};
-        const currentPageKey = 'bariloche'; // This should be set for each city page accordingly
+        const currentPageKey = 'bariloche';
 
-        const tasasDeCambio = {
-            ARS: { USD: 0.0011, EUR: 0.0010, ILS: 0.0041 }, // 1 ARS = X USD, Y EUR, Z ILS
-            USD: { ARS: 900, EUR: 0.92, ILS: 3.70 },       // 1 USD = X ARS, Y EUR, Z ILS
-            EUR: { ARS: 980, USD: 1.08, ILS: 4.00 },       // 1 EUR = X ARS, Y USD, Z ILS
-            ILS: { ARS: 245, USD: 0.27, EUR: 0.25 }        // 1 ILS = X ARS, Y USD, Z EUR
+        // Updated tasasDeCambio and simbolosMoneda
+        const tasasDeCambio = { // Base: 1 unit of the key currency
+            ARS: { USD: 0.0011, EUR: 0.0010, ILS: 0.0041, ARS: 1 },
+            USD: { ARS: 900, EUR: 0.92, ILS: 3.70, USD: 1 },
+            EUR: { ARS: 980, USD: 1.08, ILS: 4.00, EUR: 1 },
+            ILS: { ARS: 245, USD: 0.27, EUR: 0.25, ILS: 1 }
         };
         const simbolosMoneda = { ARS: '$', USD: 'US$', EUR: '€', ILS: '₪' };
 
         async function translatePage(language) {
           idiomaActual = language;
-          document.documentElement.lang = language; // Update lang attribute of HTML element
+          document.documentElement.lang = language;
           document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
 
           try {
@@ -302,11 +304,9 @@
 
           document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            let translatedText = "";
-
-            let keyParts = key.split('.');
             let textValue;
 
+            let keyParts = key.split('.');
             if (keyParts.length === 2 && currentTranslations[keyParts[0]] && typeof currentTranslations[keyParts[0]][keyParts[1]] !== 'undefined') {
                 textValue = currentTranslations[keyParts[0]][keyParts[1]];
             } else if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][key] !== 'undefined') {
@@ -315,7 +315,6 @@
               textValue = currentTranslations.common[key];
             } else {
               textValue = key;
-              // console.warn(`Translation key "${key}" not found for page "${currentPageKey}" or common in ${language}.json`);
             }
 
             if (el.hasAttribute('data-i18n-alt')) {
@@ -329,8 +328,8 @@
                 }
             }
 
-            // For keys that might contain Markdown or simple HTML (like bolding in dates)
-            if (key.includes('event-') || key.includes('stay-duration') || key.includes('how-to-arrive') || key.includes('welcome-text') || key.includes('gastronomy-intro') || key.includes('ai-menu-description') || key.includes('ai-accommodation-description') || key.includes('ai-family-tips-description') || key.includes('ai-budget-description') ) {
+            const elementsToUseInnerHTML = ['event-', 'stay-duration', 'how-to-arrive', 'welcome-text', 'gastronomy-intro', 'ai-menu-description', 'ai-accommodation-description', 'ai-family-tips-description', 'ai-budget-description'];
+            if (elementsToUseInnerHTML.some(substring => key.includes(substring))) {
               el.innerHTML = textValue;
             } else {
               el.textContent = textValue;
@@ -343,17 +342,18 @@
         }
 
         function cambiarMoneda() {
-            const monedaSeleccionada = document.getElementById('moneda').value;
-            localStorage.setItem('monedaPreferida', monedaSeleccionada);
-            // Aquí se podría agregar lógica para actualizar precios mostrados en la página si los hubiera
-            // Por ahora, solo guarda la preferencia y actualiza el display de ejemplo si existe
-            const precioEjemploElemento = document.getElementById('precio-en-moneda-seleccionada');
-            if (precioEjemploElemento) {
-                 // Suponiendo que tienes un precio base para convertir, ej. 100 USD
-                const precioBaseUSD = 100;
-                let precioConvertido = precioBaseUSD * (tasasDeCambio['USD'][monedaSeleccionada] || 1);
-                precioEjemploElemento.textContent = `${simbolosMoneda[monedaSeleccionada]}${precioConvertido.toFixed(2)}`;
-            }
+          monedaActual = document.getElementById('moneda').value;
+          localStorage.setItem('monedaPreferida', monedaActual);
+
+          const precioSpan = document.getElementById('precio-en-moneda-seleccionada');
+          if (precioSpan) {
+              // This is an example placeholder. Actual price updates would need more logic.
+              // For instance, if you have a base price in USD stored somewhere:
+              // let basePriceUSD = 10; // Example base price
+              // let convertedPrice = basePriceUSD * (tasasDeCambio['USD'][monedaActual] || 1);
+              // precioSpan.textContent = `${simbolosMoneda[monedaActual]}${convertedPrice.toFixed(2)}`;
+              precioSpan.textContent = `${simbolosMoneda[monedaActual]}`; // Just show symbol for now
+          }
         }
 
         async function callGeminiAPI(promptKey, responseDivId) {
@@ -378,7 +378,6 @@
                 if(currentTranslations.common && currentTranslations.common[errorMsgKey]) {
                     translatedError = currentTranslations.common[errorMsgKey];
                 }
-                // Page specific error can override common error for prompt not found
                 if(currentTranslations[currentPageKey] && currentTranslations[currentPageKey][errorMsgKey]) {
                     translatedError = currentTranslations[currentPageKey][errorMsgKey];
                 }
@@ -386,11 +385,10 @@
                 return;
             }
 
-            // Simulate API call
             console.log(`Simulating Gemini API call with prompt: ${promptText}`);
             setTimeout(() => {
-                // Simulated response - in a real scenario, this would come from the API
                 let simulatedResponse = `Respuesta simulada para "${promptKey}" en ${currentLanguage}. \n\nEste es un ejemplo de cómo la IA podría responder. En una implementación real, aquí estaría la información generada dinámicamente.`;
+                // ... (rest of the simulated responses from previous step) ...
                 if (promptKey === 'ai-menu-prompt') {
                      simulatedResponse = `**Desayuno:**\n- Opción 1: Yogur natural sin azúcar con frutos rojos frescos (bajos en carbohidratos) y un puñado de nueces.\n- Opción 2: Huevos revueltos con espinacas y queso feta, acompañados de una porción pequeña de palta.\n\n**Almuerzo:**\n- Opción 1: Ensalada de trucha ahumada (típica de la región) con hojas verdes, tomate cherry, pepino y aderezo de aceite de oliva y limón.\n- Opción 2: Cazuela de cordero patagónico (sin papa o con mínima cantidad, reemplazando con otras verduras bajas en carbohidratos como zapallitos, berenjena).\n\n**Cena:**\n- Opción 1: Bife de chorizo a la parrilla con ensalada mixta grande.\n- Opción 2: Salmón rosado al horno con hierbas y brócoli al vapor.`;
                 } else if (promptKey === 'ai-accommodation-prompt'){
@@ -406,11 +404,11 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const idiomaGuardado = localStorage.getItem('idiomaPreferido') || 'es';
-            translatePage(idiomaGuardado);
+            translatePage(idiomaGuardado); // Load translations first
 
             const monedaGuardada = localStorage.getItem('monedaPreferida') || 'ARS';
             document.getElementById('moneda').value = monedaGuardada;
-            // cambiarMoneda(); // Para actualizar visualización inicial si es necesario
+            cambiarMoneda(); // Update currency display based on loaded or default currency
 
             document.getElementById('btn-es').addEventListener('click', () => translatePage('es'));
             document.getElementById('btn-he').addEventListener('click', () => translatePage('he'));
