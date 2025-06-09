@@ -3,31 +3,403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rosario - Argentina Aventura Familiar</title>
+    <title data-i18n="page-title">Rosario | Viaje Familiar a Argentina</title>
     <!-- <link rel="stylesheet" href="../css/styles.css"> -->
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+        header { background-color: #004080; color: white; padding: 1em 0; text-align: center; }
+        header h1 { margin: 0; }
+        nav { position: fixed; top: 10px; right: 10px; background-color: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000; }
+        nav button, nav select, nav a { margin-left: 5px; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; background-color: #f0f0f0; cursor: pointer; }
+        nav button.active { background-color: #007bff; color: white; }
+        nav a { text-decoration: none; color: #333; }
+        .container { padding: 20px; max-width: 900px; margin: 80px auto 20px auto; background-color: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 5px; }
+        .cover-image { width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f0f0f0; }
+        .ai-section { background-color: #e9f5ff; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        .ai-section h3 { color: #007bff; }
+        .ai-section button { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+        .ai-section button:hover { background-color: #0056b3; }
+        .ai-response { margin-top: 10px; padding: 10px; background-color: #fff; border: 1px solid #eee; border-radius: 4px; white-space: pre-wrap; }
+        footer { text-align: center; padding: 20px; background-color: #333; color: white; margin-top: 30px; }
+    </style>
 </head>
 <body>
     <header>
-        <div style="position: fixed; top: 10px; right: 10px; padding: 10px; background-color: #f0f0f0; border: 1px solid #ccc;">
-            <button id="lang-es">ES</button>
-            <button id="lang-he">HE</button>
-            <a href="../index.html" id="back-to-itinerary">⬅ Volver al itinerario</a>
-        </div>
-        <h1 id="city-title">Rosario</h1>
+        <h1 id="city-title" data-i18n="city-title">Rosario</h1>
     </header>
 
-    <main>
-        <section id="city-main-content">
-            <img src="../docs/imagenes/rosario/Monumento-a-la-Bandera-1024x768.jpg" alt="Foto de portada de Rosario - Monumento a la Bandera" style="width:100%; max-height:400px; object-fit: cover;">
-            <h2>Introducción</h2>
-            <p>Rosario, la ciudad de la bandera, ofrece una rica historia, parques extensos y una vibrante vida cultural a orillas del río Paraná.</p>
-            <p><a href="rosario.md">Ver detalles en formato Markdown</a></p>
+    <nav>
+        <button id="btn-es" onclick="translatePage('es')">ES</button>
+        <button id="btn-he" onclick="translatePage('he')">HE</button>
+        <select id="moneda" onchange="cambiarMoneda()">
+            <option value="ARS">ARS</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="ILS">ILS</option>
+        </select>
+        <span id="precio-en-moneda-seleccionada"></span>
+        <a href="../index.html" data-i18n="common.back-link">⬅ Volver al itinerario</a>
+    </nav>
+
+    <div class="container">
+        <img src="../docs/imagenes/rosario/Monumento-a-la-Bandera-1024x768.jpg" alt="Foto de portada de Rosario - Monumento a la Bandera" class="cover-image" data-i18n-alt="foto-caption">
+
+        <section id="welcome">
+            <p data-i18n="welcome-text">Rosario, la ciudad de la bandera, ofrece una rica historia...</p>
         </section>
-    </main>
+
+        <section id="dates-duration">
+            <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+            <p data-i18n="stay-duration">**Estadía**: 02/10 al 05/10 (4 días)</p>
+            <p data-i18n="how-to-arrive">**Cómo llegar**: Vuelo desde Buenos Aires / Bus de larga distancia</p>
+        </section>
+
+        <section id="main-attractions">
+            <h2 data-i18n="main-attractions-title">Lugares imperdibles</h2>
+            <ul id="main-attractions-list">
+                <li><a href="https://www.monumentoalabandera.gob.ar/" target="_blank" data-i18n="attraction-0">Monumento Nacional a la Bandera</a></li>
+                <li><a href="https://www.rosario.gob.ar/web/ciudad/parques-y-plazas/parque-de-la-independencia" target="_blank" data-i18n="attraction-1">Parque de la Independencia</a></li>
+                <li><a href="https://www.rosario.gob.ar/web/ciudad/costanera" target="_blank" data-i18n="attraction-2">Costanera del Río Paraná</a></li>
+                <li><a href="https://www.isladelosinventos.gob.ar/" target="_blank" data-i18n="attraction-3">Isla de los Inventos</a></li>
+                <li><a href="https://museogallardo.gob.ar/" target="_blank" data-i18n="attraction-4">Museo de Ciencias Naturales "Dr. Ángel Gallardo"</a></li>
+                <li><a href="https://es.wikipedia.org/wiki/Bulevar_Oro%C3%B1o" target="_blank" data-i18n="attraction-5">Boulevard Oroño</a></li>
+            </ul>
+        </section>
+
+        <section id="recommended-activities">
+            <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
+            <ul>
+                <li data-i18n="rec-activity-0">Visitar el Monumento a la Bandera y subir a su mirador.</li>
+                <li data-i18n="rec-activity-1">Paseos en barco por el Río Paraná y sus islas.</li>
+                <li data-i18n="rec-activity-2">Alquilar bicicletas para recorrer la Costanera y los parques.</li>
+                <li data-i18n="rec-activity-3">Actividades recreativas en la Isla de los Inventos o la Granja de la Infancia.</li>
+                <li data-i18n="rec-activity-4">Disfrutar de un picnic en los grandes parques de la ciudad.</li>
+                <li data-i18n="rec-activity-5">Visitas a museos adaptados para niños.</li>
+            </ul>
+        </section>
+
+        <section id="gastronomy">
+            <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
+            <p data-i18n="gastronomy-intro">Rosario es conocida por su gastronomía variada...</p>
+
+            <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th data-i18n="common.table-restaurant">Restaurante</th>
+                        <th data-i18n="common.table-type">Tipo</th>
+                        <th data-i18n="common.table-gluten-free">Sin Gluten</th>
+                        <th data-i18n="common.table-sugar-free">Sin Azúcar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://www.tripadvisor.com/Restaurant_Review-g312809-d1080696-Reviews-Don_Ferro-Rosario_Province_of_Santa_Fe_Litoral.html" target="_blank" data-i18n="restaurant-name-0">Don Ferro</a></td>
+                        <td data-i18n="restaurant-type-0">Parrilla con vista al río</td>
+                        <td data-i18n="restaurant-gluten-0">✔️</td>
+                        <td data-i18n="restaurant-sugar-0">❌</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://rockandfellers.com/" target="_blank" data-i18n="restaurant-name-1">Rock & Feller's</a></td>
+                        <td data-i18n="restaurant-type-1">Americano / Familiar</td>
+                        <td data-i18n="restaurant-gluten-1">✔️</td>
+                        <td data-i18n="restaurant-sugar-1">❌</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://www.instagram.com/chinchibira/" target="_blank" data-i18n="restaurant-name-2">Chinchibira</a></td>
+                        <td data-i18n="restaurant-type-2">Cocina de autor / Fusión</td>
+                        <td data-i18n="restaurant-gluten-2">✔️</td>
+                        <td data-i18n="restaurant-sugar-2">✔️</td>
+                    </tr>
+                     <tr>
+                        <td><a href="https://www.tripadvisor.com/Restaurant_Review-g312809-d3639981-Reviews-El_Viejo_Balcon-Rosario_Province_of_Santa_Fe_Litoral.html" target="_blank" data-i18n="restaurant-name-3">El Viejo Balcón</a></td>
+                        <td data-i18n="restaurant-type-3">Pescados de río</td>
+                        <td data-i18n="restaurant-gluten-3">✔️</td>
+                        <td data-i18n="restaurant-sugar-3">❌</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 data-i18n="cafes-title">Confiterías y cafés</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th data-i18n="common.table-cafe">Confitería</th>
+                        <th data-i18n="common.table-type">Tipo</th>
+                        <th data-i18n="common.table-gluten-free">Sin Gluten</th>
+                        <th data-i18n="common.table-sugar-free">Sin Azúcar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://www.bar-el-cairo.com/" target="_blank" data-i18n="cafe-name-0">El Cairo</a></td>
+                        <td data-i18n="cafe-type-0">Histórico / Literario</td>
+                        <td data-i18n="cafe-gluten-0">❌</td>
+                        <td data-i18n="cafe-sugar-0">❌</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#LINK_TO_GOFRE#" target="_blank" data-i18n="cafe-name-1">Gofre</a></td>
+                        <td data-i18n="cafe-type-1">Waffles y pastelería</td>
+                        <td data-i18n="cafe-gluten-1">✔️</td>
+                        <td data-i18n="cafe-sugar-1">✔️</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#LINK_TO_SUNDERLAND#" target="_blank" data-i18n="cafe-name-2">Sunderland</a></td>
+                        <td data-i18n="cafe-type-2">Tradicional / Clásico</td>
+                        <td data-i18n="cafe-gluten-2">❌</td>
+                        <td data-i18n="cafe-sugar-2">❌</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="ai-menu-generator" class="ai-section">
+            <h3 data-i18n="ai-menu-title">Generador de Menú Saludable ✨</h3>
+            <p data-i18n="ai-menu-description">Obtén sugerencias de menú...</p>
+            <button onclick="callGeminiAPI('ai-menu-prompt', 'ai-menu-response')" data-i18n="common.generate-menu-button">Generar Menú</button>
+            <div id="ai-menu-response" class="ai-response"></div>
+        </section>
+
+        <section id="ai-accommodation-suggester" class="ai-section">
+            <h3 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento con IA 🏨</h3>
+            <p data-i18n="ai-accommodation-description">Obtén recomendaciones de alojamiento...</p>
+            <button onclick="callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response')" data-i18n="common.generate-accommodation-button">Generar Sugerencias</button>
+            <div id="ai-accommodation-response" class="ai-response"></div>
+        </section>
+
+        <section id="ai-family-tips" class="ai-section">
+            <h3 data-i18n="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h3>
+            <p data-i18n="ai-family-tips-description">Recibe consejos personalizados...</p>
+            <button onclick="callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response')" data-i18n="common.generate-family-tips-button">Generar Consejos</button>
+            <div id="ai-family-tips-response" class="ai-response"></div>
+        </section>
+
+        <section id="ai-budget-analysis" class="ai-section">
+            <h3 data-i18n="ai-budget-title">Análisis de Presupuesto con IA 💰</h3>
+            <p data-i18n="ai-budget-description">Obtén un análisis y desglose...</p>
+            <button onclick="callGeminiAPI('ai-budget-prompt', 'ai-budget-analysis-response')" data-i18n="common.generate-budget-button">Analizar Presupuesto</button>
+            <div id="ai-budget-analysis-response" class="ai-response"></div>
+        </section>
+
+        <section id="accommodation">
+            <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
+            <ul>
+                <li data-i18n="accommodation-0">Ros Tower Hotel</li>
+                <li data-i18n="accommodation-1">Esplendor by Wyndham Savoy Rosario</li>
+                <li data-i18n="accommodation-2">Apartamentos en el centro o cerca de la Costanera</li>
+                <li data-i18n="accommodation-3">Airbnb en barrios residenciales como Fisherton o Pichincha</li>
+            </ul>
+        </section>
+
+        <section id="coordinates">
+            <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
+            <p data-i18n="coordinates-text">32° 57' S 60° 38' O</p>
+        </section>
+
+        <section id="events-agenda">
+            <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
+            <p data-i18n="event-0">**(Consultar agenda local)**: Rosario tiene una activa vida cultural con festivales, ferias y espectáculos.</p>
+            <p data-i18n="event-1">**(Consultar agenda local)**: Eventos deportivos o musicales en el Parque de la Independencia.</p>
+            <p><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" data-i18n="common.download-agenda">Descargar agenda completa...</a></p>
+        </section>
+
+        <section id="family-tips">
+            <h2 data-i18n="family-tips-title">Consejos para familias</h2>
+            <ul>
+                <li data-i18n="family-tip-0">Aprovechen los amplios espacios verdes y la costanera para actividades al aire libre.</li>
+                <li data-i18n="family-tip-1">El transporte público es eficiente (tarjeta MOVI).</li>
+                <li data-i18n="family-tip-2">La ciudad es segura en las zonas turísticas y céntricas.</li>
+                <li data-i18n="family-tip-3">Consideren un paseo en barco para ver la ciudad desde el río.</li>
+                <li data-i18n="family-tip-4">En la Costanera hay muchas opciones de restaurantes con juegos para niños.</li>
+            </ul>
+        </section>
+
+        <section id="budget">
+            <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th data-i18n="common.budget-concept">Concepto</th>
+                        <th data-i18n="common.budget-price">Precio estimado (USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td data-i18n="budget-concept-0">Alojamiento (noche, familia)</td><td data-i18n="budget-price-0">50–120</td></tr>
+                    <tr><td data-i18n="budget-concept-1">Comida (por día, familia)</td><td data-i18n="budget-price-1">30–70</td></tr>
+                    <tr><td data-i18n="budget-concept-2">Transporte público (por día)</td><td data-i18n="budget-price-2">3–5</td></tr>
+                    <tr><td data-i18n="budget-concept-3">Actividades y tours (por día)</td><td data-i18n="budget-price-3">20–50</td></tr>
+                    <tr><td data-i18n="budget-concept-4">Entradas museos/atracciones</td><td data-i18n="budget-price-4">0–15</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="cultural-tips">
+            <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
+            <ul>
+                <li data-i18n="cultural-tip-0">El "Che" Guevara nació cerca de Rosario.</li>
+                <li data-i18n="cultural-tip-1">Rosario es cuna de grandes futbolistas (Messi, Di María) y artistas.</li>
+                <li data-i18n="cultural-tip-2">La siesta es común en las horas centrales del día, afectando horarios comerciales.</li>
+                <li data-i18n="cultural-tip-3">Los rosarinos son conocidos por su hospitalidad.</li>
+            </ul>
+        </section>
+
+        <section id="map">
+            <h2 data-i18n="map-title">Mapa de Rosario</h2>
+            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-60.7805%2C-33.0077%2C-60.4805%2C-32.8877&amp;layer=mapnik"
+                    style="border: 1px solid black; width:100%; height: 400px;"
+                    allowfullscreen></iframe>
+            <br/>
+            <small><a href="https://www.openstreetmap.org/#map=12/-32.944/-60.655" target="_blank" data-i18n="common.see-bigger-map">Ver mapa más grande</a></small>
+        </section>
+    </div>
 
     <footer>
-        <p>Pie de página para Rosario.</p>
+        <p>© 2024 Aventura Familiar Argentina. Todos los derechos reservados.</p>
     </footer>
-    <!-- <script src="../js/citypage.js"></script> -->
+
+    <script>
+        let idiomaActual = localStorage.getItem('idiomaPreferido') || 'es';
+        let monedaActual = localStorage.getItem('monedaPreferida') || 'ARS';
+        let currentTranslations = {};
+        const currentPageKey = 'rosario'; // **** UPDATED FOR ROSARIO ****
+
+        const tasasDeCambio = {
+            ARS: { USD: 0.0011, EUR: 0.0010, ILS: 0.0041, ARS: 1 },
+            USD: { ARS: 900, EUR: 0.92, ILS: 3.70, USD: 1 },
+            EUR: { ARS: 980, USD: 1.08, ILS: 4.00, EUR: 1 },
+            ILS: { ARS: 245, USD: 0.27, EUR: 0.25, ILS: 1 }
+        };
+        const simbolosMoneda = { ARS: '$', USD: 'US$', EUR: '€', ILS: '₪' };
+
+        async function translatePage(language) {
+          idiomaActual = language;
+          document.documentElement.lang = language;
+          document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+
+          try {
+            const response = await fetch(`../locales/${language}.json`);
+            if (!response.ok) {
+              console.error(`Error loading translation file for ${language}: ${response.statusText}`);
+              currentTranslations = {};
+            } else {
+              currentTranslations = await response.json();
+            }
+          } catch (error) {
+            console.error(`Error fetching translation file for ${language}:`, error);
+            currentTranslations = {};
+          }
+
+          if (currentTranslations[currentPageKey] && currentTranslations[currentPageKey]["page-title"]) {
+            document.title = currentTranslations[currentPageKey]["page-title"];
+          } else if (currentTranslations.common && currentTranslations.common["page-title"]) {
+             document.title = currentTranslations.common["page-title"];
+          }
+
+
+          document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            let textValue;
+
+            let keyParts = key.split('.');
+            if (keyParts.length === 2 && currentTranslations[keyParts[0]] && typeof currentTranslations[keyParts[0]][keyParts[1]] !== 'undefined') {
+                textValue = currentTranslations[keyParts[0]][keyParts[1]];
+            } else if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][key] !== 'undefined') {
+              textValue = currentTranslations[currentPageKey][key];
+            } else if (currentTranslations.common && typeof currentTranslations.common[key] !== 'undefined') {
+              textValue = currentTranslations.common[key];
+            } else {
+              textValue = el.textContent || key;
+            }
+
+            if (el.hasAttribute('data-i18n-alt')) {
+                const altKey = el.getAttribute('data-i18n-alt');
+                 if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][altKey] !== 'undefined') {
+                    el.alt = currentTranslations[currentPageKey][altKey];
+                } else if (currentTranslations.common && typeof currentTranslations.common[altKey] !== 'undefined') {
+                    el.alt = currentTranslations.common[altKey];
+                }
+            }
+
+            const elementsToUseInnerHTML = ['event-', 'stay-duration', 'how-to-arrive', 'welcome-text', 'gastronomy-intro', 'ai-menu-description', 'ai-accommodation-description', 'ai-family-tips-description', 'ai-budget-description'];
+            if (elementsToUseInnerHTML.some(substring => key.includes(substring)) || (el.tagName === 'A' && el.getAttribute('href') && el.getAttribute('href').startsWith('#') === false) ) {
+              el.innerHTML = textValue;
+            } else {
+              el.textContent = textValue;
+            }
+          });
+
+          document.getElementById('btn-es').classList.toggle('active', language === 'es');
+          document.getElementById('btn-he').classList.toggle('active', language === 'he');
+          localStorage.setItem('idiomaPreferido', language);
+        }
+
+        function cambiarMoneda() {
+          monedaActual = document.getElementById('moneda').value;
+          localStorage.setItem('monedaPreferida', monedaActual);
+
+          const precioSpan = document.getElementById('precio-en-moneda-seleccionada');
+          if (precioSpan) {
+              precioSpan.textContent = `${simbolosMoneda[monedaActual]}`;
+          }
+        }
+
+        async function callGeminiAPI(promptKey, responseDivId) {
+            const responseDiv = document.getElementById(responseDivId);
+            const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
+            let loadingMsg = "Generando...";
+            if(currentTranslations.common && currentTranslations.common["ai-loading"]) {
+                loadingMsg = currentTranslations.common["ai-loading"];
+            }
+            if(currentTranslations[currentPageKey] && currentTranslations[currentPageKey]["ai-loading"]) {
+                loadingMsg = currentTranslations[currentPageKey]["ai-loading"];
+            }
+            responseDiv.textContent = loadingMsg;
+
+            let promptText = "";
+            if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][promptKey] !== 'undefined') {
+                promptText = currentTranslations[currentPageKey][promptKey];
+            } else if (currentTranslations.common && typeof currentTranslations.common[promptKey] !== 'undefined') {
+                promptText = currentTranslations.common[promptKey];
+            }
+
+            if (!promptText) {
+                const errorMsgKey = "ai-error";
+                let translatedError = "Error: Prompt not found.";
+                if(currentTranslations.common && currentTranslations.common[errorMsgKey]) {
+                    translatedError = currentTranslations.common[errorMsgKey];
+                }
+                if(currentTranslations[currentPageKey] && currentTranslations[currentPageKey][errorMsgKey]) {
+                    translatedError = currentTranslations[currentPageKey][errorMsgKey];
+                }
+                responseDiv.textContent = translatedError + ` (Prompt ${promptKey} missing for ${currentLanguage})`;
+                return;
+            }
+
+            console.log(`Simulating Gemini API call with prompt for ${currentPageKey}: ${promptText}`);
+            setTimeout(() => {
+                let simulatedResponse = `Respuesta simulada para "${promptKey}" en ${currentLanguage} para la página ${currentPageKey}. \n\nEste es un ejemplo de cómo la IA podría responder.`;
+                if (currentPageKey === 'rosario' && promptKey === 'ai-menu-prompt') {
+                     simulatedResponse = `**Desayuno (Rosarino):**\n- Opción 1: Carlito (tostado de jamón y queso típico) - pedir pan integral si es posible.\n- Opción 2: Yogur con frutas y granola sin azúcar.\n\n**Almuerzo (Frente al Río):**\n- Opción 1: Boga a la parrilla con ensalada fresca.\n- Opción 2: Pollo grillado con vegetales asados.\n\n**Cena (Noche Rosarina):**\n- Opción 1: Picada adaptada: quesos duros, aceitunas, fiambres magros, bastones de zanahoria/apio. Evitar panificados o elegir opciones integrales con moderación.\n- Opción 2: Lomo al plato con puré de calabaza.`;
+                }
+                responseDiv.innerHTML = simulatedResponse.replace(/\n/g, '<br>');
+            }, 2000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const idiomaGuardado = localStorage.getItem('idiomaPreferido') || 'es';
+            translatePage(idiomaGuardado);
+
+            const monedaGuardada = localStorage.getItem('monedaPreferida') || 'ARS';
+            document.getElementById('moneda').value = monedaGuardada;
+            cambiarMoneda();
+
+            document.getElementById('btn-es').addEventListener('click', () => translatePage('es'));
+            document.getElementById('btn-he').addEventListener('click', () => translatePage('he'));
+        });
+    </script>
 </body>
 </html>
