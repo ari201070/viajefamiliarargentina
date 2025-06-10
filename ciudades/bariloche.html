@@ -73,7 +73,9 @@
     ul li { margin-bottom: 5px; }
     iframe { border: 1px solid black; width: 100%; max-width: 700px; display: block; margin: 20px auto; }
     table { border-collapse: collapse; width: 100%; max-width: 700px; margin: 20px auto; background: #f7fbff; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
-    th, td { border: 1px solid #b3c7e6; padding: 10px 15px; text-align: left; font-size: 16px; }
+    th, td { border: 1px solid #b3c7e6; padding: 10px 15px; body:not(.rtl) th, body:not(.rtl) td {
+  text-align: left;
+}; font-size: 16px; }
     th { background: #e6f0fa; font-weight: bold; }
     .rtl { direction: rtl !important; }
     .rtl nav a { margin-left: 0; margin-right: auto; }
