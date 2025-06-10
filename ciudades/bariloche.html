@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title data-i18n="page-title">Bariloche | Viaje Familiar a Argentina</title>
-  <!-- <link rel="stylesheet" href="../estilos.css"> --> 
+  <!-- <link rel="stylesheet" href="../estilos.css"> -->
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
       color: #333;
-      margin: 0; 
+      margin: 0;
       padding: 0;
-      padding-top: 70px; 
+      padding-top: 70px;
       transition: direction 0.3s;
     }
-    nav { 
+    nav {
       position: fixed;
       top: 0;
       left: 0;
@@ -37,7 +37,7 @@
       cursor: pointer;
       background-color: #f0f0f0;
     }
-    nav button.active { 
+    nav button.active {
       background: #e6eaff;
       border-color: #6d7fc9;
       font-weight: bold;
@@ -46,26 +46,26 @@
       text-decoration: none;
       font-weight: bold;
       color: #007BFF;
-      margin-left: auto; 
+      margin-left: auto;
     }
-    .container { 
+    .container {
       padding: 20px;
-      max-width: 800px; 
-      margin: 0 auto; 
+      max-width: 800px;
+      margin: 0 auto;
     }
-    .cover-image { 
+    .cover-image {
       width: 100%;
       max-width: 700px;
       height: auto;
       display: block;
-      margin: 0 auto 10px auto; 
+      margin: 0 auto 10px auto;
       border-radius: 14px;
       box-shadow: 0 3px 16px rgba(0,0,0,0.15);
     }
     .foto-caption {
       text-align: center;
       color: #555;
-      font-size: 0.9em; 
+      font-size: 0.9em;
       margin-bottom: 30px;
     }
     h1, h2, h3 { color: #0F4761; }
@@ -73,14 +73,29 @@
     ul li { margin-bottom: 5px; }
     iframe { border: 1px solid black; width: 100%; max-width: 700px; display: block; margin: 20px auto; }
     table { border-collapse: collapse; width: 100%; max-width: 700px; margin: 20px auto; background: #f7fbff; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
-    th, td { border: 1px solid #b3c7e6; padding: 10px 15px; body:not(.rtl) th, body:not(.rtl) td {
-  text-align: left;
-}; font-size: 16px; }
-    th { background: #e6f0fa; font-weight: bold; }
+    th, td {
+      border: 1px solid #b3c7e6;
+      padding: 10px 15px;
+      /* text-align: left; -- REMOVED from here */
+      font-size: 16px;
+    }
+    body:not(.rtl) th, body:not(.rtl) td { /* ADDED for LTR default */
+      text-align: left;
+    }
+    .rtl th, .rtl td { /* ENSURED to correctly align right for RTL */
+      text-align: right !important;
+    }
+    th { /* Other th styles like background, font-weight remain */
+      background: #e6f0fa;
+      font-weight: bold;
+    }
+    .simbolo-check { /* ADDED for centering symbols */
+      text-align: center;
+    }
     .rtl { direction: rtl !important; }
     .rtl nav a { margin-left: 0; margin-right: auto; }
     .rtl ul { padding-right: 25px; padding-left: 0; }
-    .rtl th, .rtl td { text-align: right !important; }
+    /* .rtl th, .rtl td rule already handles RTL for all table cells including th */
     .ai-section { background: #e6f0fa; padding: 20px; border-radius: 8px; margin: 30px auto; max-width: 700px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     .ai-section h2 { color: #2176d2; margin-top: 0; }
     .ai-button { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color 0.3s ease; display: block; margin: 15px auto; max-width: 300px; }
@@ -160,26 +175,26 @@
         <tr>
           <td><a href="https://www.elbolichedealberto.com.ar/" target="_blank" data-i18n="restaurant-name-0">El Boliche de Alberto</a></td>
           <td data-i18n="restaurant-type-0">Parrilla / Carnes</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
-          <td data-i18n="common.no-symbol">❌</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.no-symbol">❌</td>
         </tr>
         <tr>
           <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g312848-d10103700-Reviews-La_Fonda_del_Tio-San_Carlos_de_Bariloche_Province_of_Rio_Negro_Patagonia.html" target="_blank" data-i18n="restaurant-name-1">La Fonda del Tío</a></td>
           <td data-i18n="restaurant-type-1">Comida patagónica casera</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
         </tr>
         <tr>
           <td><a href="https://www.butterfly.com.ar/" target="_blank" data-i18n="restaurant-name-2">Butterfly</a></td>
           <td data-i18n="restaurant-type-2">Alta cocina / Trucha</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
         </tr>
         <tr>
           <td><a href="https://www.rapanui.com.ar/" target="_blank" data-i18n="restaurant-name-3">Rapa Nui</a></td>
           <td data-i18n="restaurant-type-3">Chocolatería / Cafetería</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
         </tr>
       </tbody>
     </table>
@@ -197,20 +212,20 @@
         <tr>
           <td><a href="https://www.mamuschka.com/" target="_blank" data-i18n="cafe-name-0">Mamuschka</a></td>
           <td data-i18n="cafe-type-0">Chocolatería / Pastelería</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
         </tr>
         <tr>
           <td><a href="https://www.abuelagoye.com/" target="_blank" data-i18n="cafe-name-1">Abuela Goye</a></td>
           <td data-i18n="cafe-type-1">Chocolatería / Cafetería</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
         </tr>
         <tr>
           <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g312848-d10103700-Reviews-El_Almacen_de_Flores-San_Carlos_de_Bariloche_Province_of_Rio_Negro_Patagonia.html" target="_blank" data-i18n="cafe-name-2">El Almacén de Flores</a></td>
           <td data-i18n="cafe-type-2">Café de especialidad</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
-          <td data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
+          <td class="simbolo-check" data-i18n="common.yes-symbol">✔️</td>
         </tr>
       </tbody>
     </table>
@@ -322,10 +337,10 @@
     let idiomaActual = 'es';
     let monedaActual = 'ARS';
     let currentTranslations = {};
-    const currentPageKey = 'bariloche'; 
+    const currentPageKey = 'bariloche';
 
     let tasasDeCambio = {
-      ARS: { ARS: 1, USD: 1/1000, EUR: 1/900, ILS: 1/110 }, 
+      ARS: { ARS: 1, USD: 1/1000, EUR: 1/900, ILS: 1/110 },
       USD: { ARS: 1000, USD: 1, EUR: 1000/900, ILS: 1000/110 },
       EUR: { ARS: 900, USD: 900/1000, EUR: 1, ILS: 900/110 },
       ILS: { ARS: 110, USD: 110/1000, EUR: 110/900, ILS: 1 }
@@ -355,15 +370,14 @@
       try {
         const response = await fetch(`../locales/${language}.json`);
         if (!response.ok) {
-          console.error(`DEBUG: Error loading translation file for ${language}: ${response.statusText}`); // DEBUG
+          console.error(`Error loading translation file for ${language}: ${response.statusText}`);
           currentTranslations = {};
         } else {
           currentTranslations = await response.json();
-          // LOG 1: VER TODO EL JSON CARGADO
-          console.log(`DEBUG: Traducciones cargadas para ${language} (${currentPageKey}):`, JSON.parse(JSON.stringify(currentTranslations)));
+          // DEBUG LOG REMOVED
         }
       } catch (error) {
-        console.error(`DEBUG: Error fetching translation file for ${language}:`, error);
+        console.error(`Error fetching translation file for ${language}:`, error);
         currentTranslations = {};
       }
 
@@ -376,7 +390,7 @@
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        let translatedText = `[[${key} NOT FOUND IN JSON]]`; 
+        let translatedText = `[[${key} NOT FOUND IN JSON]]`;
         let textSource = "NOT FOUND";
         let keyToSearch = key;
         let searchInCommon = false;
@@ -391,7 +405,7 @@
               translatedText = currentTranslations.common[keyToSearch];
               textSource = "common";
             }
-        } else { 
+        } else {
             if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][keyToSearch] !== 'undefined') {
               translatedText = currentTranslations[currentPageKey][keyToSearch];
               textSource = currentPageKey;
@@ -400,21 +414,12 @@
               textSource = "common (fallback)";
             }
         }
-        
-        // Enhanced Debugging Log for critical keys
-        if (key.includes('restaurant-name') || key.includes('cafe-name') || key.includes('restaurant-type') || key.includes('cafe-type') || key.startsWith('attraction')) {
-            console.log(`DEBUG: Element: <${el.tagName.toLowerCase()}${el.id ? ' id="'+el.id+'"' : ''}${el.getAttribute('data-i18n') ? ' data-i18n="'+el.getAttribute('data-i18n')+'"' : ''}>, Searched For Key: "${keyToSearch}", Found In Section: "${textSource}", Resulting Text: "${translatedText}"`);
-            if (textSource === "NOT FOUND") {
-                 console.log(`   - JSON content for current page ("${currentPageKey}"):`, currentTranslations[currentPageKey] ? JSON.stringify(currentTranslations[currentPageKey]).substring(0,500) + "..." : `"${currentPageKey}" object not in JSON or empty`);
-                 console.log(`   - JSON content for common:`, currentTranslations.common ? JSON.stringify(currentTranslations.common).substring(0,500) + "..." : `"common" object not in JSON or empty`);
-                 console.log(`   - Specifically, currentTranslations["${currentPageKey}"]["${keyToSearch}"]: `, currentTranslations[currentPageKey] ? currentTranslations[currentPageKey][keyToSearch] : 'undefined');
-                 console.log(`   - Specifically, currentTranslations.common["${keyToSearch}"]: `, currentTranslations.common ? currentTranslations.common[keyToSearch] : 'undefined');
-            }
-        }
+
+        // Enhanced Debugging Log for critical keys - REMOVED
 
         const altKey = el.getAttribute('data-i18n-alt');
         if (altKey) {
-            let translatedAlt = altKey; 
+            let translatedAlt = altKey;
             let altKeyToSearch = altKey;
             let searchAltInCommon = false;
             if (altKey.startsWith('common.')) {
@@ -436,7 +441,7 @@
           el.textContent = translatedText;
         }
       });
-      
+
       document.getElementById('btn-es').classList.toggle('active', language === 'es');
       document.getElementById('btn-he').classList.toggle('active', language === 'he');
       localStorage.setItem('idiomaPreferido', language);
@@ -445,7 +450,7 @@
     function cambiarMoneda() {
       monedaActual = document.getElementById('moneda').value;
       localStorage.setItem('monedaPreferida', monedaActual);
-      document.getElementById('moneda').value = monedaActual; 
+      document.getElementById('moneda').value = monedaActual;
       const precioSpan = document.getElementById('precio-en-moneda-seleccionada');
       if (precioSpan) {
           precioSpan.textContent = simbolosMoneda[monedaActual] || monedaActual;
@@ -470,7 +475,7 @@
       if (currentTranslations.common && currentTranslations.common["ai-error"]) {
             errorText = currentTranslations.common["ai-error"];
       }
-      if (currentTranslations[currentPageKey] && currentTranslations[currentPageKey]["ai-error"]){ 
+      if (currentTranslations[currentPageKey] && currentTranslations[currentPageKey]["ai-error"]){
             errorText = currentTranslations[currentPageKey]["ai-error"];
       }
       if (!promptText) {
@@ -479,7 +484,7 @@
         loadingIndicator.style.display = 'none';
         return;
       }
-      const apiKey = ""; 
+      const apiKey = "";
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
       const payload = { contents: [{ role: "user", parts: [{ text: promptText }] }], generationConfig: { responseMimeType: "text/plain" } };
       try {
@@ -488,17 +493,17 @@
         if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
           responseDiv.textContent = result.candidates[0].content.parts[0].text;
         } else { console.error("Respuesta inesperada de API:", result); responseDiv.textContent = errorText; }
-      } catch (error) { console.error("Error llamando a API Gemini:", error); responseDiv.textContent = errorText; } 
+      } catch (error) { console.error("Error llamando a API Gemini:", error); responseDiv.textContent = errorText; }
       finally { button.disabled = false; loadingIndicator.style.display = 'none'; }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
       const idiomaGuardado = localStorage.getItem('idiomaPreferido') || 'es';
       const monedaGuardada = localStorage.getItem('monedaPreferida') || 'ARS';
-      document.getElementById('moneda').value = monedaGuardada; 
+      document.getElementById('moneda').value = monedaGuardada;
       actualizarTasas(function() {
-        cambiarMoneda(); 
-        translatePage(idiomaGuardado); 
+        cambiarMoneda();
+        translatePage(idiomaGuardado);
       });
       document.getElementById('generate-menu-btn').addEventListener('click', () => callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator'));
       document.getElementById('generate-accommodation-btn').addEventListener('click', () => callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator'));
@@ -508,3 +513,5 @@
   </script>
 </body>
 </html>
+
+[end of ciudades/bariloche.html]
