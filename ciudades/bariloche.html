@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title data-i18n="page-title">Bariloche | Viaje Familiar a Argentina</title>
-  <!-- <link rel="stylesheet" href="../estilos.css"> --> <!-- Asumimos que estilos.css no se usa por ahora según promp -->
+  <!-- <link rel="stylesheet" href="../estilos.css"> --> 
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
       color: #333;
-      margin: 0; /* Margen global a 0 para que el nav fijo funcione bien */
+      margin: 0; 
       padding: 0;
-      padding-top: 70px; /* Espacio para el nav fijo */
+      padding-top: 70px; 
       transition: direction 0.3s;
     }
-    nav { /* Estilo para el nuevo nav */
+    nav { 
       position: fixed;
       top: 0;
       left: 0;
@@ -37,7 +37,7 @@
       cursor: pointer;
       background-color: #f0f0f0;
     }
-    nav button.active { /* Para botones de idioma */
+    nav button.active { 
       background: #e6eaff;
       border-color: #6d7fc9;
       font-weight: bold;
@@ -46,128 +46,46 @@
       text-decoration: none;
       font-weight: bold;
       color: #007BFF;
-      margin-left: auto; /* Empuja el link de volver a la derecha */
+      margin-left: auto; 
     }
-    .container { /* Contenedor principal para el contenido de la ciudad */
+    .container { 
       padding: 20px;
-      max-width: 800px; /* Un ancho máximo para el contenido */
-      margin: 0 auto; /* Centrar el container */
+      max-width: 800px; 
+      margin: 0 auto; 
     }
-    .cover-image { /* Clase para la imagen de portada */
+    .cover-image { 
       width: 100%;
       max-width: 700px;
       height: auto;
       display: block;
-      margin: 0 auto 10px auto; /* Margen ajustado */
+      margin: 0 auto 10px auto; 
       border-radius: 14px;
       box-shadow: 0 3px 16px rgba(0,0,0,0.15);
     }
     .foto-caption {
       text-align: center;
       color: #555;
-      font-size: 0.9em; /* Ajustado */
+      font-size: 0.9em; 
       margin-bottom: 30px;
     }
-    h1, h2, h3 {
-      color: #0F4761;
-    }
-    ul {
-      margin-bottom: 20px;
-      padding-left: 25px;
-    }
-    ul li {
-      margin-bottom: 5px;
-    }
-    iframe {
-      border: 1px solid black;
-      width: 100%;
-      max-width: 700px;
-      display: block;
-      margin: 20px auto;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      max-width: 700px;
-      margin: 20px auto;
-      background: #f7fbff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    th, td {
-      border: 1px solid #b3c7e6;
-      padding: 10px 15px;
-      text-align: left;
-      font-size: 16px;
-    }
-    th {
-      background: #e6f0fa;
-      font-weight: bold;
-    }
-    .rtl {
-      direction: rtl !important;
-    }
-    .rtl nav a { /* Ajuste para el link en RTL */
-        margin-left: 0;
-        margin-right: auto;
-    }
-    .rtl ul {
-      padding-right: 25px;
-      padding-left: 0;
-    }
-    .rtl th, .rtl td {
-        text-align: right !important;
-    }
-    .ai-section {
-      background: #e6f0fa;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 30px auto;
-      max-width: 700px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .ai-section h2 {
-      color: #2176d2;
-      margin-top: 0;
-    }
-    .ai-button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-      display: block;
-      margin: 15px auto;
-      max-width: 300px;
-    }
-    .ai-button:hover {
-      background-color: #45a049;
-    }
-    .ai-button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    .ai-response {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #ffffff;
-      border: 1px solid #d0e0f0;
-      border-radius: 5px;
-      white-space: pre-wrap;
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 50px;
-    }
-    .ai-loading {
-      text-align: center;
-      font-style: italic;
-      color: #666;
-      margin-top: 10px;
-    }
+    h1, h2, h3 { color: #0F4761; }
+    ul { margin-bottom: 20px; padding-left: 25px; }
+    ul li { margin-bottom: 5px; }
+    iframe { border: 1px solid black; width: 100%; max-width: 700px; display: block; margin: 20px auto; }
+    table { border-collapse: collapse; width: 100%; max-width: 700px; margin: 20px auto; background: #f7fbff; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
+    th, td { border: 1px solid #b3c7e6; padding: 10px 15px; text-align: left; font-size: 16px; }
+    th { background: #e6f0fa; font-weight: bold; }
+    .rtl { direction: rtl !important; }
+    .rtl nav a { margin-left: 0; margin-right: auto; }
+    .rtl ul { padding-right: 25px; padding-left: 0; }
+    .rtl th, .rtl td { text-align: right !important; }
+    .ai-section { background: #e6f0fa; padding: 20px; border-radius: 8px; margin: 30px auto; max-width: 700px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .ai-section h2 { color: #2176d2; margin-top: 0; }
+    .ai-button { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color 0.3s ease; display: block; margin: 15px auto; max-width: 300px; }
+    .ai-button:hover { background-color: #45a049; }
+    .ai-button:disabled { background-color: #cccccc; cursor: not-allowed; }
+    .ai-response { margin-top: 20px; padding: 15px; background-color: #ffffff; border: 1px solid #d0e0f0; border-radius: 5px; white-space: pre-wrap; font-size: 15px; line-height: 1.6; min-height: 50px; }
+    .ai-loading { text-align: center; font-style: italic; color: #666; margin-top: 10px; }
   </style>
 </head>
 <body>
@@ -402,22 +320,15 @@
     let idiomaActual = 'es';
     let monedaActual = 'ARS';
     let currentTranslations = {};
-    const currentPageKey = 'bariloche'; // Define la clave para esta página específica
+    const currentPageKey = 'bariloche'; 
 
-    // Tasas de cambio (se actualizan al cargar la página)
     let tasasDeCambio = {
-      ARS: { ARS: 1, USD: 1/1000, EUR: 1/900, ILS: 1/110 }, // Placeholder, se actualizará
+      ARS: { ARS: 1, USD: 1/1000, EUR: 1/900, ILS: 1/110 }, 
       USD: { ARS: 1000, USD: 1, EUR: 1000/900, ILS: 1000/110 },
       EUR: { ARS: 900, USD: 900/1000, EUR: 1, ILS: 900/110 },
       ILS: { ARS: 110, USD: 110/1000, EUR: 110/900, ILS: 1 }
     };
-    // Símbolos de moneda
-    const simbolosMoneda = {
-      ARS: "$",
-      USD: "US$",
-      EUR: "€",
-      ILS: "₪"
-    };
+    const simbolosMoneda = { ARS: "$", USD: "US$", EUR: "€", ILS: "₪" };
 
     async function actualizarTasas(callback) {
       try {
@@ -430,28 +341,27 @@
           tasasDeCambio.EUR = { ARS: (rates.EUR ? rates.ARS / rates.EUR : 900), USD: (rates.EUR ? 1 / rates.EUR : 900/1000), EUR: 1, ILS: (rates.EUR && rates.ILS ? rates.ILS / rates.EUR : 900/110) };
           tasasDeCambio.ILS = { ARS: (rates.ILS ? rates.ARS / rates.ILS : 110), USD: (rates.ILS ? 1 / rates.ILS : 110/1000), EUR: (rates.ILS && rates.EUR ? rates.EUR / rates.ILS : 110/900), ILS: 1 };
         }
-      } catch (error) {
-        console.error("Error al actualizar tasas de cambio:", error);
-        // Mantener tasas placeholder si falla la API
-      }
+      } catch (error) { console.error("Error al actualizar tasas de cambio:", error); }
       if (typeof callback === "function") callback();
     }
 
     async function translatePage(language) {
       idiomaActual = language;
       document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.documentElement.lang = language; // Actualiza el lang del HTML
+      document.documentElement.lang = language;
 
       try {
         const response = await fetch(`../locales/${language}.json`);
         if (!response.ok) {
-          console.error(`Error loading translation file for ${language}: ${response.statusText}`);
+          console.error(`DEBUG: Error loading translation file for ${language}: ${response.statusText}`); // DEBUG
           currentTranslations = {};
         } else {
           currentTranslations = await response.json();
+          // LOG 1: VER TODO EL JSON CARGADO
+          console.log(`DEBUG: Traducciones cargadas para ${language} (${currentPageKey}):`, JSON.parse(JSON.stringify(currentTranslations)));
         }
       } catch (error) {
-        console.error(`Error fetching translation file for ${language}:`, error);
+        console.error(`DEBUG: Error fetching translation file for ${language}:`, error);
         currentTranslations = {};
       }
 
@@ -464,49 +374,60 @@
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        let translatedText = "";
-        let targetObject = currentTranslations[currentPageKey]; // Primero buscar en el objeto de la página actual
+        let translatedText = `[[${key} NOT FOUND IN JSON]]`; 
+        let textSource = "NOT FOUND";
+        let keyToSearch = key;
+        let searchInCommon = false;
 
-        if (key.startsWith('common.')) { // Si la clave indica explícitamente "common"
-            const commonKey = key.substring(7); // remover "common."
-            targetObject = currentTranslations.common;
-            if (targetObject && typeof targetObject[commonKey] !== 'undefined') {
-                translatedText = targetObject[commonKey];
-            } else {
-                targetObject = currentTranslations[currentPageKey]; // Fallback a la página actual si no está en common
-                 if (targetObject && typeof targetObject[key] !== 'undefined') {
-                    translatedText = targetObject[key];
-                } else {
-                    translatedText = key; // Fallback final a la clave literal
-                }
+        if (key.startsWith('common.')) {
+            keyToSearch = key.substring(7);
+            searchInCommon = true;
+        }
+
+        if (searchInCommon) {
+            if (currentTranslations.common && typeof currentTranslations.common[keyToSearch] !== 'undefined') {
+              translatedText = currentTranslations.common[keyToSearch];
+              textSource = "common";
             }
-        } else { // Claves específicas de la página o comunes sin prefijo
-            if (targetObject && typeof targetObject[key] !== 'undefined') {
-              translatedText = targetObject[key];
-            } else if (currentTranslations.common && typeof currentTranslations.common[key] !== 'undefined') {
-              translatedText = currentTranslations.common[key]; // Fallback a common
-            } else {
-              translatedText = key;
+        } else { 
+            if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][keyToSearch] !== 'undefined') {
+              translatedText = currentTranslations[currentPageKey][keyToSearch];
+              textSource = currentPageKey;
+            } else if (currentTranslations.common && typeof currentTranslations.common[keyToSearch] !== 'undefined') {
+              translatedText = currentTranslations.common[keyToSearch];
+              textSource = "common (fallback)";
             }
         }
         
-        // Para los atributos alt de las imágenes que usan data-i18n-alt
+        // Enhanced Debugging Log for critical keys
+        if (key.includes('restaurant-name') || key.includes('cafe-name') || key.includes('restaurant-type') || key.includes('cafe-type') || key.startsWith('attraction')) {
+            console.log(`DEBUG: Element: <${el.tagName.toLowerCase()}${el.id ? ' id="'+el.id+'"' : ''}${el.getAttribute('data-i18n') ? ' data-i18n="'+el.getAttribute('data-i18n')+'"' : ''}>, Searched For Key: "${keyToSearch}", Found In Section: "${textSource}", Resulting Text: "${translatedText}"`);
+            if (textSource === "NOT FOUND") {
+                 console.log(`   - JSON content for current page ("${currentPageKey}"):`, currentTranslations[currentPageKey] ? JSON.stringify(currentTranslations[currentPageKey]).substring(0,500) + "..." : `"${currentPageKey}" object not in JSON or empty`);
+                 console.log(`   - JSON content for common:`, currentTranslations.common ? JSON.stringify(currentTranslations.common).substring(0,500) + "..." : `"common" object not in JSON or empty`);
+                 console.log(`   - Specifically, currentTranslations["${currentPageKey}"]["${keyToSearch}"]: `, currentTranslations[currentPageKey] ? currentTranslations[currentPageKey][keyToSearch] : 'undefined');
+                 console.log(`   - Specifically, currentTranslations.common["${keyToSearch}"]: `, currentTranslations.common ? currentTranslations.common[keyToSearch] : 'undefined');
+            }
+        }
+
         const altKey = el.getAttribute('data-i18n-alt');
         if (altKey) {
-            let translatedAlt = "";
-            if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][altKey] !== 'undefined') {
-                translatedAlt = currentTranslations[currentPageKey][altKey];
-            } else if (currentTranslations.common && typeof currentTranslations.common[altKey] !== 'undefined') {
-                translatedAlt = currentTranslations.common[altKey];
+            let translatedAlt = altKey; 
+            let altKeyToSearch = altKey;
+            let searchAltInCommon = false;
+            if (altKey.startsWith('common.')) {
+                altKeyToSearch = altKey.substring(7);
+                searchAltInCommon = true;
+            }
+            if (searchAltInCommon) {
+                if (currentTranslations.common && typeof currentTranslations.common[altKeyToSearch] !== 'undefined') translatedAlt = currentTranslations.common[altKeyToSearch];
             } else {
-                translatedAlt = altKey;
+                if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][altKeyToSearch] !== 'undefined') translatedAlt = currentTranslations[currentPageKey][altKeyToSearch];
+                else if (currentTranslations.common && typeof currentTranslations.common[altKeyToSearch] !== 'undefined') translatedAlt = currentTranslations.common[altKeyToSearch];
             }
             el.alt = translatedAlt;
         }
 
-
-        // Aplicar traducción al contenido del elemento
-        // (keys con ** deben usar innerHTML para que el bold funcione)
         if (translatedText.includes('**') || key.includes('event-') || key.includes('stay-duration') || key.includes('how-to-arrive')) {
           el.innerHTML = translatedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         } else {
@@ -522,104 +443,68 @@
     function cambiarMoneda() {
       monedaActual = document.getElementById('moneda').value;
       localStorage.setItem('monedaPreferida', monedaActual);
-      document.getElementById('moneda').value = monedaActual; // Asegura que el select esté actualizado
-
+      document.getElementById('moneda').value = monedaActual; 
       const precioSpan = document.getElementById('precio-en-moneda-seleccionada');
       if (precioSpan) {
           precioSpan.textContent = simbolosMoneda[monedaActual] || monedaActual;
       }
-      // Aquí iría la lógica para actualizar precios en la página si los hubiera
     }
 
     async function callGeminiAPI(promptKey, responseDivId, buttonId, loadingIndicatorId) {
       const button = document.getElementById(buttonId);
       const loadingIndicator = document.getElementById(loadingIndicatorId);
       const responseDiv = document.getElementById(responseDivId);
-
       button.disabled = true;
       loadingIndicator.style.display = 'block';
       responseDiv.textContent = '';
-
       let promptText = "";
-      if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][promptKey] !== 'undefined') {
+      let errorText = "Error: Prompt no encontrado.";
+       if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][promptKey] !== 'undefined') {
         promptText = currentTranslations[currentPageKey][promptKey];
       } else if (currentTranslations.common && typeof currentTranslations.common[promptKey] !== 'undefined') {
         promptText = currentTranslations.common[promptKey];
       }
 
-      let errorText = "Error: Prompt no encontrado."; // Fallback muy básico
-        if (currentTranslations.common && currentTranslations.common["ai-error"]) {
+      if (currentTranslations.common && currentTranslations.common["ai-error"]) {
             errorText = currentTranslations.common["ai-error"];
-        }
-        if (currentTranslations[currentPageKey] && currentTranslations[currentPageKey]["ai-error"]){ // La página específica puede sobreescribir el error común
+      }
+      if (currentTranslations[currentPageKey] && currentTranslations[currentPageKey]["ai-error"]){ 
             errorText = currentTranslations[currentPageKey]["ai-error"];
-        }
-
+      }
       if (!promptText) {
         responseDiv.textContent = errorText + ` (Prompt ${promptKey} missing)`;
         button.disabled = false;
         loadingIndicator.style.display = 'none';
         return;
       }
-
-      const payload = {
-        contents: [{ role: "user", parts: [{ text: promptText }] }],
-        generationConfig: { responseMimeType: "text/plain" }
-      };
-
-      const apiKey = ""; // La clave API se proporcionará en tiempo de ejecución
+      const apiKey = ""; 
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-      // Cambiado a gemini-1.5-flash como ejemplo, puede ser gemini-2.0-flash u otro.
-
+      const payload = { contents: [{ role: "user", parts: [{ text: promptText }] }], generationConfig: { responseMimeType: "text/plain" } };
       try {
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+        const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         const result = await response.json();
-
         if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
           responseDiv.textContent = result.candidates[0].content.parts[0].text;
-        } else {
-          console.error("Respuesta inesperada de API:", result);
-          responseDiv.textContent = errorText;
-        }
-      } catch (error) {
-        console.error("Error llamando a API Gemini:", error);
-        responseDiv.textContent = errorText;
-      } finally {
-        button.disabled = false;
-        loadingIndicator.style.display = 'none';
-      }
+        } else { console.error("Respuesta inesperada de API:", result); responseDiv.textContent = errorText; }
+      } catch (error) { console.error("Error llamando a API Gemini:", error); responseDiv.textContent = errorText; } 
+      finally { button.disabled = false; loadingIndicator.style.display = 'none'; }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
       const idiomaGuardado = localStorage.getItem('idiomaPreferido') || 'es';
       const monedaGuardada = localStorage.getItem('monedaPreferida') || 'ARS';
-      
-      document.getElementById('moneda').value = monedaGuardada; // Establece el valor del select
-
+      document.getElementById('moneda').value = monedaGuardada; 
       actualizarTasas(function() {
-        // Una vez actualizadas las tasas (o si falló, con placeholders),
-        // se establece la moneda y se traduce la página.
-        cambiarMoneda(); // Para asegurar que monedaActual esté bien y se aplique estado inicial del select
-        translatePage(idiomaGuardado); // Carga el JSON y traduce
+        cambiarMoneda(); 
+        translatePage(idiomaGuardado); 
       });
-
-      document.getElementById('generate-menu-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator')
-      );
-      document.getElementById('generate-accommodation-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator')
-      );
-      document.getElementById('generate-family-tips-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator')
-      );
-      document.getElementById('generate-budget-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-budget-prompt', 'ai-budget-response', 'generate-budget-btn', 'ai-budget-loading-indicator')
-      );
+      document.getElementById('generate-menu-btn').addEventListener('click', () => callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator'));
+      document.getElementById('generate-accommodation-btn').addEventListener('click', () => callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator'));
+      document.getElementById('generate-family-tips-btn').addEventListener('click', () => callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator'));
+      document.getElementById('generate-budget-btn').addEventListener('click', () => callGeminiAPI('ai-budget-prompt', 'ai-budget-response', 'generate-budget-btn', 'ai-budget-loading-indicator'));
     });
   </script>
 </body>
 </html>
+
+[end of ciudades/bariloche.html]
