@@ -107,8 +107,8 @@
 </head>
 <body>
   <nav>
-    <button id="btn-es" onclick="translatePage('es')">Español</button>
-    <button id="btn-he" onclick="translatePage('he')">עברית</button>
+    <button id="btn-es" class="btn-lang" data-lang="es" data-i18n="common.lang-es">Español</button>
+    <button id="btn-he" class="btn-lang" data-lang="he" data-i18n="common.lang-he">עברית</button>
     <select id="moneda" onchange="cambiarMoneda()">
         <option value="ARS">ARS</option>
         <option value="USD">USD</option>
@@ -333,19 +333,20 @@
     <br><small><a href="https://www.openstreetmap.org/#map=12/-41.133/-71.328" target="_blank" data-i18n="common.see-bigger-map">Ver mapa más grande</a></small>
   </div>
 
+  <script src="../js/i18n.js" defer></script>
   <script>
-    let idiomaActual = 'es';
-    let monedaActual = 'ARS';
-    let currentTranslations = {};
-    const currentPageKey = 'bariloche';
-
+    // Variables and functions that remain in bariloche.html:
+    let monedaActual = 'ARS'; // Kept for currency logic until moved to sharedUtils
+    const currentPageKey = 'bariloche'; // Essential for i18n.js context
     let tasasDeCambio = {
       ARS: { ARS: 1, USD: 1/1000, EUR: 1/900, ILS: 1/110 },
       USD: { ARS: 1000, USD: 1, EUR: 1000/900, ILS: 1000/110 },
       EUR: { ARS: 900, USD: 900/1000, EUR: 1, ILS: 900/110 },
       ILS: { ARS: 110, USD: 110/1000, EUR: 110/900, ILS: 1 }
     };
-    const simbolosMoneda = { ARS: "$", USD: "US$", EUR: "€", ILS: "₪" };
+    const simbolosMoneda = {
+      ARS: "$", USD: "US$", EUR: "€", ILS: "₪"
+    };
 
     async function actualizarTasas(callback) {
       try {
@@ -361,92 +362,6 @@
       } catch (error) { console.error("Error al actualizar tasas de cambio:", error); }
       if (typeof callback === "function") callback();
     }
-
-    async function translatePage(language) {
-      idiomaActual = language;
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.documentElement.lang = language;
-
-      try {
-        const response = await fetch(`../locales/${language}.json`);
-        if (!response.ok) {
-          console.error(`Error loading translation file for ${language}: ${response.statusText}`);
-          currentTranslations = {};
-        } else {
-          currentTranslations = await response.json();
-          // DEBUG LOG REMOVED
-        }
-      } catch (error) {
-        console.error(`Error fetching translation file for ${language}:`, error);
-        currentTranslations = {};
-      }
-
-      const pageTitleKey = "page-title";
-      if (currentTranslations[currentPageKey] && currentTranslations[currentPageKey][pageTitleKey]) {
-        document.title = currentTranslations[currentPageKey][pageTitleKey];
-      } else if (currentTranslations.common && currentTranslations.common[pageTitleKey]) {
-         document.title = currentTranslations.common[pageTitleKey];
-      }
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        let translatedText = `[[${key} NOT FOUND IN JSON]]`;
-        let textSource = "NOT FOUND";
-        let keyToSearch = key;
-        let searchInCommon = false;
-
-        if (key.startsWith('common.')) {
-            keyToSearch = key.substring(7);
-            searchInCommon = true;
-        }
-
-        if (searchInCommon) {
-            if (currentTranslations.common && typeof currentTranslations.common[keyToSearch] !== 'undefined') {
-              translatedText = currentTranslations.common[keyToSearch];
-              textSource = "common";
-            }
-        } else {
-            if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][keyToSearch] !== 'undefined') {
-              translatedText = currentTranslations[currentPageKey][keyToSearch];
-              textSource = currentPageKey;
-            } else if (currentTranslations.common && typeof currentTranslations.common[keyToSearch] !== 'undefined') {
-              translatedText = currentTranslations.common[keyToSearch];
-              textSource = "common (fallback)";
-            }
-        }
-
-        // Enhanced Debugging Log for critical keys - REMOVED
-
-        const altKey = el.getAttribute('data-i18n-alt');
-        if (altKey) {
-            let translatedAlt = altKey;
-            let altKeyToSearch = altKey;
-            let searchAltInCommon = false;
-            if (altKey.startsWith('common.')) {
-                altKeyToSearch = altKey.substring(7);
-                searchAltInCommon = true;
-            }
-            if (searchAltInCommon) {
-                if (currentTranslations.common && typeof currentTranslations.common[altKeyToSearch] !== 'undefined') translatedAlt = currentTranslations.common[altKeyToSearch];
-            } else {
-                if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][altKeyToSearch] !== 'undefined') translatedAlt = currentTranslations[currentPageKey][altKeyToSearch];
-                else if (currentTranslations.common && typeof currentTranslations.common[altKeyToSearch] !== 'undefined') translatedAlt = currentTranslations.common[altKeyToSearch];
-            }
-            el.alt = translatedAlt;
-        }
-
-        if (translatedText.includes('**') || key.includes('event-') || key.includes('stay-duration') || key.includes('how-to-arrive')) {
-          el.innerHTML = translatedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        } else {
-          el.textContent = translatedText;
-        }
-      });
-
-      document.getElementById('btn-es').classList.toggle('active', language === 'es');
-      document.getElementById('btn-he').classList.toggle('active', language === 'he');
-      localStorage.setItem('idiomaPreferido', language);
-    }
-
     function cambiarMoneda() {
       monedaActual = document.getElementById('moneda').value;
       localStorage.setItem('monedaPreferida', monedaActual);
@@ -456,55 +371,70 @@
           precioSpan.textContent = simbolosMoneda[monedaActual] || monedaActual;
       }
     }
-
     async function callGeminiAPI(promptKey, responseDivId, buttonId, loadingIndicatorId) {
-      const button = document.getElementById(buttonId);
-      const loadingIndicator = document.getElementById(loadingIndicatorId);
-      const responseDiv = document.getElementById(responseDivId);
-      button.disabled = true;
-      loadingIndicator.style.display = 'block';
-      responseDiv.textContent = '';
-      let promptText = "";
-      let errorText = "Error: Prompt no encontrado.";
-       if (currentTranslations[currentPageKey] && typeof currentTranslations[currentPageKey][promptKey] !== 'undefined') {
-        promptText = currentTranslations[currentPageKey][promptKey];
-      } else if (currentTranslations.common && typeof currentTranslations.common[promptKey] !== 'undefined') {
-        promptText = currentTranslations.common[promptKey];
-      }
+        const button = document.getElementById(buttonId);
+        const loadingIndicator = document.getElementById(loadingIndicatorId);
+        const responseDiv = document.getElementById(responseDivId);
+        button.disabled = true;
+        loadingIndicator.style.display = 'block';
+        responseDiv.textContent = ''; // Clear previous or loading text
 
-      if (currentTranslations.common && currentTranslations.common["ai-error"]) {
-            errorText = currentTranslations.common["ai-error"];
-      }
-      if (currentTranslations[currentPageKey] && currentTranslations[currentPageKey]["ai-error"]){
-            errorText = currentTranslations[currentPageKey]["ai-error"];
-      }
-      if (!promptText) {
-        responseDiv.textContent = errorText + ` (Prompt ${promptKey} missing)`;
-        button.disabled = false;
-        loadingIndicator.style.display = 'none';
-        return;
-      }
-      const apiKey = "";
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-      const payload = { contents: [{ role: "user", parts: [{ text: promptText }] }], generationConfig: { responseMimeType: "text/plain" } };
-      try {
-        const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        const result = await response.json();
-        if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
-          responseDiv.textContent = result.candidates[0].content.parts[0].text;
-        } else { console.error("Respuesta inesperada de API:", result); responseDiv.textContent = errorText; }
-      } catch (error) { console.error("Error llamando a API Gemini:", error); responseDiv.textContent = errorText; }
-      finally { button.disabled = false; loadingIndicator.style.display = 'none'; }
+        let promptText = "";
+        // Use i18n_textosGlobales which is populated by i18n.js
+        if (i18n_textosGlobales[currentPageKey] && typeof i18n_textosGlobales[currentPageKey][promptKey] !== 'undefined') {
+            promptText = i18n_textosGlobales[currentPageKey][promptKey];
+        } else if (i18n_textosGlobales.common && typeof i18n_textosGlobales.common[promptKey] !== 'undefined') {
+            promptText = i18n_textosGlobales.common[promptKey];
+        }
+
+        let errorText = "Error: Prompt no encontrado."; // Default fallback
+        if (i18n_textosGlobales.common && i18n_textosGlobales.common["ai-error"]) {
+            errorText = i18n_textosGlobales.common["ai-error"];
+        }
+         // Page specific error can override
+        if (i18n_textosGlobales[currentPageKey] && i18n_textosGlobales[currentPageKey]["ai-error"]){
+            errorText = i18n_textosGlobales[currentPageKey]["ai-error"];
+        }
+
+        let loadingText = "Generando...";
+        if (i18n_textosGlobales.common && i18n_textosGlobales.common["ai-loading"]) {
+            loadingText = i18n_textosGlobales.common["ai-loading"];
+        }
+        if (i18n_textosGlobales[currentPageKey] && i18n_textosGlobales[currentPageKey]["ai-loading"]){
+            loadingText = i18n_textosGlobales[currentPageKey]["ai-loading"];
+        }
+        responseDiv.textContent = loadingText;
+
+
+        if (!promptText) {
+            responseDiv.textContent = errorText + ` (Prompt ${promptKey} missing)`;
+            button.disabled = false;
+            loadingIndicator.style.display = 'none';
+            return;
+        }
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const payload = { contents: [{ role: "user", parts: [{ text: promptText }] }], generationConfig: { responseMimeType: "text/plain" } };
+        try {
+            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            const result = await response.json();
+            if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
+            responseDiv.textContent = result.candidates[0].content.parts[0].text;
+            } else { console.error("Respuesta inesperada de API:", result); responseDiv.textContent = errorText; }
+        } catch (error) { console.error("Error llamando a API Gemini:", error); responseDiv.textContent = errorText; }
+        finally { button.disabled = false; loadingIndicator.style.display = 'none'; }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      const idiomaGuardado = localStorage.getItem('idiomaPreferido') || 'es';
       const monedaGuardada = localStorage.getItem('monedaPreferida') || 'ARS';
       document.getElementById('moneda').value = monedaGuardada;
+
+      initI18n(currentPageKey);
+
       actualizarTasas(function() {
         cambiarMoneda();
-        translatePage(idiomaGuardado);
       });
+
       document.getElementById('generate-menu-btn').addEventListener('click', () => callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator'));
       document.getElementById('generate-accommodation-btn').addEventListener('click', () => callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator'));
       document.getElementById('generate-family-tips-btn').addEventListener('click', () => callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator'));
@@ -513,5 +443,7 @@
   </script>
 </body>
 </html>
+
+[end of ciudades/bariloche.html]
 
 [end of ciudades/bariloche.html]

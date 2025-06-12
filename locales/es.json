@@ -19,7 +19,13 @@
     "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
     "budget-concept": "Concepto",
     "budget-price": "Precio estimado (USD)",
-    "see-bigger-map": "Ver mapa más grande"
+    "see-bigger-map": "Ver mapa más grande",
+    "lang-es": "Español",
+    "lang-he": "עברית",
+    "transporte-origen": "Origen",
+    "transporte-destino": "Destino",
+    "transporte-compania": "Compañía (como enlace)",
+    "transporte-duracion": "Duración Estimada"
   },
   "bariloche": {
     "page-title": "Bariloche | Viaje Familiar a Argentina",
@@ -300,5 +306,29 @@
     "cultural-tip-2": "La siesta es común en las horas centrales del día, afectando horarios comerciales.",
     "cultural-tip-3": "Los rosarinos son conocidos por su hospitalidad.",
     "map-title": "Mapa de Rosario"
+  },
+  "index": {
+    "page-title": "Argentina Aventura Familiar - Itinerario Principal",
+    "main-app-title": "Argentina Aventura Familiar de 30 Días - Itinerario",
+    "destinos-principales-title": "Destinos Principales",
+    "transporte-title": "Tabla de Transporte Entre Ciudades",
+    "city-name-ba": "Buenos Aires",
+    "city-desc-ba": "Descripción breve de Buenos Aires.",
+    "city-link-ba": "Explorar más detalles",
+    "city-name-ro": "Rosario",
+    "city-desc-ro": "Descripción breve de Rosario.",
+    "city-link-ro": "Explorar más detalles",
+    "transporte-r1-origen": "Buenos Aires",
+    "transporte-r1-destino": "Rosario",
+    "transporte-r1-compania": "Compañía XYZ",
+    "transporte-r1-duracion": "4hs",
+    "conversor-moneda-title": "Conversor de Moneda Moderno",
+    "conversor-moneda-placeholder": "El conversor de moneda interactivo se integrará aquí.",
+    "lista-equipaje-title": "Lista de Equipaje",
+    "lista-equipaje-placeholder": "La lista de equipaje interactiva se integrará aquí.",
+    "consulta-ia-title": "Consulta a IA Experta en Viajes",
+    "consulta-ia-placeholder": "El módulo de consulta a IA se integrará aquí."
   }
 }
+
+[end of locales/es.json]

@@ -3,57 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Argentina Aventura Familiar de 30 Días</title>
-    <!-- <link rel="stylesheet" href="css/styles.css"> --> {/* Placeholder for CSS */}
+    <title data-i18n="page-title">Argentina Aventura Familiar de 30 Días</title>
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; padding-top: 70px; /* Space for fixed nav */ }
+        nav { position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(255,255,255,0.95); padding: 10px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px; z-index: 1000; box-sizing: border-box; }
+        nav button, nav select { font-weight: bold; padding: 8px 12px; margin: 0 2px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; background-color: #f0f0f0; }
+        nav button.active { background: #e6eaff; border-color: #6d7fc9; font-weight: bold; }
+        nav a { text-decoration: none; font-weight: bold; color: #007BFF; margin-left: auto; }
+        .rtl nav a { margin-left: 0; margin-right: auto; }
+        header h1 { text-align: center; color: #0F4761; margin-top: 20px; margin-bottom: 30px; }
+        main { padding: 20px; max-width: 900px; margin: 0 auto; }
+        section { background-color: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+        h2 { color: #0056b3; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top:0; }
+        .city-card-placeholder { border: 1px solid #ddd; padding: 15px; margin-bottom:15px; border-radius: 5px; background-color: #f9f9f9; }
+        .city-card-placeholder img { margin-right: 15px; border-radius: 4px;}
+        .city-card-placeholder h3 { margin-top:0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        body:not(.rtl) th, body:not(.rtl) td { text-align: left; }
+        .rtl th, .rtl td { text-align: right !important; }
+        th { background-color: #f0f0f0; }
+        footer { background-color: #333; color: white; text-align: center; padding: 15px 0; margin-top: 30px; }
+        footer section { margin-bottom: 10px; }
+    </style>
 </head>
 <body>
+    <nav>
+        <button id="btn-es" class="btn-lang" data-lang="es" data-i18n="common.lang-es">Español</button>
+        <button id="btn-he" class="btn-lang" data-lang="he" data-i18n="common.lang-he">עברית</button>
+        <select id="moneda" onchange="cambiarMoneda()">
+            <option value="ARS">ARS</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="ILS">ILS</option>
+        </select>
+        <span id="precio-en-moneda-seleccionada"></span>
+        <!-- The "Volver al itinerario" link is not logical on index.html itself, so it's removed or will be hidden by JS if common.back-link is empty for index -->
+        <a href="index.html" data-i18n="common.back-link" id="back-to-itinerary-link" style="display: none;">⬅ Volver al itinerario</a>
+    </nav>
+
     <header>
-        <!-- Fixed bar (top right) -->
-        <div style="position: fixed; top: 10px; right: 10px; padding: 10px; background-color: #f0f0f0; border: 1px solid #ccc;">
-            <button id="lang-es">ES</button>
-            <button id="lang-he">HE</button>
-            <a href="/index.html" id="back-to-itinerary" style="display: none;">⬅ Volver al itinerario</a>
-            {/* Currency selector will be added here later */}
-        </div>
-        <h1>Argentina Aventura Familiar de 30 Días - Itinerario</h1>
+        <h1 data-i18n="main-app-title">Argentina Aventura Familiar de 30 Días - Itinerario</h1>
     </header>
 
     <main>
         <section id="city-cards-container">
-            <h2>Destinos Principales</h2>
-            <!-- City cards will be dynamically inserted here (e.g., using CityCard.tsx or vanilla JS) -->
+            <h2 data-i18n="destinos-principales-title">Destinos Principales</h2>
             <div class="city-card-placeholder">
                 <img src="docs/imagenes/buenosaires/buenosaires.jpg" alt="Buenos Aires" style="width:100px; height:auto;">
-                <h3>Buenos Aires</h3>
-                <p>Descripción breve de Buenos Aires.</p>
-                <a href="ciudades/buenosaires.html">Explorar más detalles</a>
+                <h3 data-i18n="index.city-name-ba">Buenos Aires</h3>
+                <p data-i18n="index.city-desc-ba">Descripción breve de Buenos Aires.</p>
+                <a href="ciudades/buenosaires.html" data-i18n="index.city-link-ba">Explorar más detalles</a>
             </div>
             <div class="city-card-placeholder">
                 <img src="docs/imagenes/rosario/Monumento-a-la-Bandera-1024x768.jpg" alt="Rosario - Monumento a la Bandera" style="width:100px; height:auto;">
-                <h3>Rosario</h3>
-                <p>Descripción breve de Rosario.</p>
-                <a href="ciudades/rosario.html">Explorar más detalles</a>
+                <h3 data-i18n="index.city-name-ro">Rosario</h3>
+                <p data-i18n="index.city-desc-ro">Descripción breve de Rosario.</p>
+                <a href="ciudades/rosario.html" data-i18n="index.city-link-ro">Explorar más detalles</a>
             </div>
             <!-- Add more city card placeholders as needed -->
         </section>
 
         <section id="transport-table">
-            <h2>Tabla de Transporte Entre Ciudades</h2>
+            <h2 data-i18n="transporte-title">Tabla de Transporte Entre Ciudades</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Compañía (como enlace)</th>
-                        <th>Duración Estimada</th>
+                        <th data-i18n="common.transporte-origen">Origen</th>
+                        <th data-i18n="common.transporte-destino">Destino</th>
+                        <th data-i18n="common.transporte-compania">Compañía (como enlace)</th>
+                        <th data-i18n="common.transporte-duracion">Duración Estimada</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Buenos Aires</td>
-                        <td>Rosario</td>
-                        <td><a href="#" target="_blank">Compañía XYZ</a></td>
-                        <td>4hs</td>
+                        <td data-i18n="index.transporte-r1-origen">Buenos Aires</td>
+                        <td data-i18n="index.transporte-r1-destino">Rosario</td>
+                        <td><a href="#" target="_blank" data-i18n="index.transporte-r1-compania">Compañía XYZ</a></td>
+                        <td data-i18n="index.transporte-r1-duracion">4hs</td>
                     </tr>
                     {/* More rows will be added here */}
                 </tbody>
@@ -63,7 +91,7 @@
         <!-- Optional: Featured attractions section -->
         <!--
         <section id="featured-attractions">
-            <h2>Atracciones Destacadas</h2>
+            <h2 data-i18n="atracciones-destacadas-title">Atracciones Destacadas</h2>
             {/* Content here */}
         </section>
         -->
@@ -71,24 +99,53 @@
 
     <footer>
         <section id="currency-converter-module">
-            <h2>Conversor de Moneda Moderno</h2>
-            {/* Placeholder for modern currency converter */}
-            <p>El conversor de moneda interactivo se integrará aquí.</p>
+            <h2 data-i18n="conversor-moneda-title">Conversor de Moneda Moderno</h2>
+            <p data-i18n="conversor-moneda-placeholder">El conversor de moneda interactivo se integrará aquí.</p>
         </section>
 
         <section id="packing-list-module">
-            <h2>Lista de Equipaje</h2>
-            {/* Placeholder for packing list */}
-            <p>La lista de equipaje interactiva se integrará aquí.</p>
+            <h2 data-i18n="lista-equipaje-title">Lista de Equipaje</h2>
+            <p data-i18n="lista-equipaje-placeholder">La lista de equipaje interactiva se integrará aquí.</p>
         </section>
 
         <section id="ai-chat-module">
-            <h2>Consulta a IA Experta en Viajes</h2>
-            {/* Placeholder for AI chat module */}
-            <p>El módulo de consulta a IA se integrará aquí.</p>
+            <h2 data-i18n="consulta-ia-title">Consulta a IA Experta en Viajes</h2>
+            <p data-i18n="consulta-ia-placeholder">El módulo de consulta a IA se integrará aquí.</p>
         </section>
     </footer>
 
-    <!-- <script src="js/main.js"></script> --> {/* Placeholder for JS */}
+    <script src="js/i18n.js" defer></script>
+    <script>
+      const currentPageKey = 'index';
+
+      // Placeholder for currency functions that will be in sharedUtils.js
+      let monedaActual = localStorage.getItem('monedaPreferida') || 'ARS';
+      const simbolosMoneda = { ARS: "$", USD: "US$", EUR: "€", ILS: "₪" };
+      function cambiarMoneda() {
+        if(document.getElementById('moneda')) {
+            monedaActual = document.getElementById('moneda').value;
+            localStorage.setItem('monedaPreferida', monedaActual);
+            const precioSpan = document.getElementById('precio-en-moneda-seleccionada');
+            if(precioSpan) precioSpan.textContent = simbolosMoneda[monedaActual] || monedaActual;
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize i18n - this will also load initial translations and set up language buttons
+        initI18n(currentPageKey);
+
+        // Initialize currency (most logic will be in sharedUtils.js)
+        if(document.getElementById('moneda')) {
+            document.getElementById('moneda').value = monedaActual;
+        }
+        cambiarMoneda(); // To set initial display for currency symbol
+
+        // Hide "Volver al itinerario" link on index page
+        const backLink = document.getElementById('back-to-itinerary-link');
+        if (backLink && (currentPageKey === 'index' || currentPageKey === 'home')) {
+            backLink.style.display = 'none';
+        }
+      });
+    </script>
 </body>
 </html>

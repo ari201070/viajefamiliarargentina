@@ -19,7 +19,13 @@
     "download-agenda": "הורד את לוח האירועים המלא בפורמט iCal (.zip)",
     "budget-concept": "מושג",
     "budget-price": "מחיר משוער (USD)",
-    "see-bigger-map": "לצפייה במפה גדולה יותר"
+    "see-bigger-map": "לצפייה במפה גדולה יותר",
+    "lang-es": "Español",
+    "lang-he": "עברית",
+    "transporte-origen": "[HE] Origen",
+    "transporte-destino": "[HE] Destino",
+    "transporte-compania": "[HE] Compañía (como enlace)",
+    "transporte-duracion": "[HE] Duración Estimada"
   },
   "bariloche": {
     "page-title": "ברילוצ'ה | טיול משפחתי בארגנטינה",
@@ -302,3 +308,5 @@
     "map-title": "[HE] Mapa de Rosario"
   }
 }
+
+[end of locales/he.json]
