@@ -20,7 +20,7 @@
     "budget-concept": "מושג",
     "budget-price": "מחיר משוער (USD)",
     "see-bigger-map": "לצפייה במפה גדולה יותר",
-    "lang-es": "Español",
+    "lang-es": "[HE] Español",
     "lang-he": "עברית",
     "transporte-origen": "[HE] Origen",
     "transporte-destino": "[HE] Destino",
@@ -308,5 +308,3 @@
     "map-title": "[HE] Mapa de Rosario"
   }
 }
-
-[end of locales/he.json]
