@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 
 const AIConsultant = () => {
-  const { t, currentLanguage } = useTranslation();
+  const { t, currentLanguage, isRTL } = useTranslation();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -113,9 +113,10 @@ const AIConsultant = () => {
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold flex items-center">
-          🤖 {t('aiConsultant')}
+      <div className={`flex justify-between items-center mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <h2 className={`text-2xl font-bold flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <span className={isRTL ? 'ml-2' : 'mr-2'}>🤖</span>
+          {t('aiConsultant')}
         </h2>
         <button
           onClick={clearChat}
@@ -129,7 +130,7 @@ const AIConsultant = () => {
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`mb-4 flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+            className={`mb-4 flex ${message.isUser ? (isRTL ? 'justify-start' : 'justify-end') : (isRTL ? 'justify-end' : 'justify-start')}`}
           >
             <div
               className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
@@ -140,8 +141,8 @@ const AIConsultant = () => {
                   : 'bg-white text-gray-800 shadow'
               }`}
             >
-              <p className="text-sm">{message.text}</p>
-              <p className="text-xs opacity-70 mt-1">
+              <p className={`text-sm ${isRTL ? 'text-right' : 'text-left'}`}>{message.text}</p>
+              <p className={`text-xs opacity-70 mt-1 ${isRTL ? 'text-right' : 'text-left'}`}>
                 {message.timestamp.toLocaleTimeString()}
               </p>
             </div>
@@ -149,30 +150,31 @@ const AIConsultant = () => {
         ))}
         
         {isLoading && (
-          <div className="flex justify-start mb-4">
+          <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'} mb-4`}>
             <div className="bg-white text-gray-800 shadow max-w-xs lg:max-w-md px-4 py-2 rounded-lg">
-              <div className="flex items-center">
+              <div className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <div className="animate-pulse flex space-x-1">
                   <div className="rounded-full bg-gray-400 h-2 w-2"></div>
                   <div className="rounded-full bg-gray-400 h-2 w-2"></div>
                   <div className="rounded-full bg-gray-400 h-2 w-2"></div>
                 </div>
-                <span className="ml-2 text-sm">{t('thinking')}</span>
+                <span className={`text-sm ${isRTL ? 'mr-2' : 'ml-2'}`}>{t('thinking')}</span>
               </div>
             </div>
           </div>
         )}
       </div>
 
-      <div className="flex gap-2">
+      <div className={`flex gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
         <input
           type="text"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && !isLoading && sendMessage()}
           placeholder={t('askQuestion')}
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className={`flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${isRTL ? 'text-right' : 'text-left'}`}
           disabled={isLoading}
+          dir={isRTL ? 'rtl' : 'ltr'}
         />
         <button
           onClick={sendMessage}
@@ -183,7 +185,7 @@ const AIConsultant = () => {
         </button>
       </div>
 
-      <div className="mt-4 text-sm text-gray-600">
+      <div className={`mt-4 text-sm text-gray-600 ${isRTL ? 'text-right' : 'text-left'}`}>
         <p>{t('aiDisclaimer')}</p>
       </div>
     </div>

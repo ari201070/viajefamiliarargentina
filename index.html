@@ -4,91 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Argentina Aventura Familiar de 30 Días</title>
-    <!-- <link rel="stylesheet" href="css/styles.css"> --> {/* Placeholder for CSS */}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* RTL support styles */
+        html[dir="rtl"] {
+            direction: rtl;
+        }
+        html[dir="ltr"] {
+            direction: ltr;
+        }
+        
+        /* Custom styles for better RTL support */
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: margin 0.3s ease, padding 0.3s ease;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <!-- Fixed bar (top right) -->
-        <div style="position: fixed; top: 10px; right: 10px; padding: 10px; background-color: #f0f0f0; border: 1px solid #ccc;">
-            <button id="lang-es">ES</button>
-            <button id="lang-he">HE</button>
-            <a href="/index.html" id="back-to-itinerary" style="display: none;">⬅ Volver al itinerario</a>
-            {/* Currency selector will be added here later */}
-        </div>
-        <h1>Argentina Aventura Familiar de 30 Días - Itinerario</h1>
-    </header>
-
-    <main>
-        <section id="city-cards-container">
-            <h2>Destinos Principales</h2>
-            <!-- City cards will be dynamically inserted here (e.g., using CityCard.tsx or vanilla JS) -->
-            <div class="city-card-placeholder">
-                <img src="docs/imagenes/buenosaires/cualquiernombre.jpg" alt="Buenos Aires (placeholder)" style="width:100px; height:auto;">
-                <h3>Buenos Aires</h3>
-                <p>Descripción breve de Buenos Aires.</p>
-                <a href="ciudades/buenosaires.html">Explorar más detalles</a>
-            </div>
-            <div class="city-card-placeholder">
-                <img src="docs/imagenes/rosario/Monumento-a-la-Bandera-1024x768.jpg" alt="Rosario (placeholder)" style="width:100px; height:auto;">
-                <h3>Rosario</h3>
-                <p>Descripción breve de Rosario.</p>
-                <a href="ciudades/rosario.html">Explorar más detalles</a>
-            </div>
-            <!-- Add more city card placeholders as needed -->
-        </section>
-
-        <section id="transport-table">
-            <h2>Tabla de Transporte Entre Ciudades</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Compañía (como enlace)</th>
-                        <th>Duración Estimada</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Buenos Aires</td>
-                        <td>Rosario</td>
-                        <td><a href="#" target="_blank">Compañía XYZ</a></td>
-                        <td>4hs</td>
-                    </tr>
-                    {/* More rows will be added here */}
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Optional: Featured attractions section -->
-        <!--
-        <section id="featured-attractions">
-            <h2>Atracciones Destacadas</h2>
-            {/* Content here */}
-        </section>
-        -->
-    </main>
-
-    <footer>
-        <section id="currency-converter-module">
-            <h2>Conversor de Moneda Moderno</h2>
-            {/* Placeholder for modern currency converter */}
-            <p>El conversor de moneda interactivo se integrará aquí.</p>
-        </section>
-
-        <section id="packing-list-module">
-            <h2>Lista de Equipaje</h2>
-            {/* Placeholder for packing list */}
-            <p>La lista de equipaje interactiva se integrará aquí.</p>
-        </section>
-
-        <section id="ai-chat-module">
-            <h2>Consulta a IA Experta en Viajes</h2>
-            {/* Placeholder for AI chat module */}
-            <p>El módulo de consulta a IA se integrará aquí.</p>
-        </section>
-    </footer>
-
-    <!-- <script src="js/main.js"></script> --> {/* Placeholder for JS */}
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

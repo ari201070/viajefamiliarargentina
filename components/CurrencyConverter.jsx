@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 
 const CurrencyConverter = () => {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [amount, setAmount] = useState(100);
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('ARS');
@@ -61,35 +61,36 @@ const CurrencyConverter = () => {
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-center mb-6">{t('currencyConverter')}</h2>
+      <h2 className={`text-2xl font-bold text-center mb-6 ${isRTL ? 'text-right' : 'text-left'}`}>{t('currencyConverter')}</h2>
       
       {loading && (
-        <div className="text-center text-blue-600 mb-4">{t('loading')}</div>
+        <div className={`text-center text-blue-600 mb-4 ${isRTL ? 'text-right' : 'text-left'}`}>{t('loading')}</div>
       )}
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className={`block text-sm font-medium text-gray-700 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
             {t('amount')}
           </label>
           <input
             type="number"
             value={amount}
             onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${isRTL ? 'text-right' : 'text-left'}`}
             placeholder="0.00"
+            dir={isRTL ? 'rtl' : 'ltr'}
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className={`block text-sm font-medium text-gray-700 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
               {t('from')}
             </label>
             <select
               value={fromCurrency}
               onChange={(e) => setFromCurrency(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${isRTL ? 'text-right' : 'text-left'}`}
             >
               {currencies.map((currency) => (
                 <option key={currency.code} value={currency.code}>
@@ -100,13 +101,13 @@ const CurrencyConverter = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className={`block text-sm font-medium text-gray-700 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
               {t('to')}
             </label>
             <select
               value={toCurrency}
               onChange={(e) => setToCurrency(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${isRTL ? 'text-right' : 'text-left'}`}
             >
               {currencies.map((currency) => (
                 <option key={currency.code} value={currency.code}>
@@ -127,7 +128,7 @@ const CurrencyConverter = () => {
         </div>
 
         <div className="bg-blue-50 p-4 rounded-lg">
-          <div className="text-center">
+          <div className={`text-center ${isRTL ? 'text-right' : 'text-left'}`}>
             <div className="text-lg font-semibold text-gray-800">
               {amount} {fromCurrency} =
             </div>

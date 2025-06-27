@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from '../hooks/useTranslation';
 
 const CityPage = ({ city, onBack }) => {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
 
   if (!city) return null;
 
@@ -68,10 +68,10 @@ const CityPage = ({ city, onBack }) => {
         />
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white">
+          <div className={`text-center text-white ${isRTL ? 'text-right' : 'text-left'}`}>
             <h1 className="text-4xl md:text-6xl font-bold mb-4">{t(city.name)}</h1>
             <p className="text-xl md:text-2xl opacity-90">{t(city.region)}</p>
-            <div className="mt-4 flex justify-center items-center space-x-6 text-sm">
+            <div className={`mt-4 flex justify-center items-center space-x-6 text-sm ${isRTL ? 'flex-row-reverse space-x-reverse' : ''}`}>
               <span>📅 {city.duration}</span>
               <span>🏨 {city.accommodationType}</span>
               <span>💰 {city.budgetRange}</span>
@@ -84,9 +84,14 @@ const CityPage = ({ city, onBack }) => {
         {/* Back Button */}
         <button
           onClick={onBack}
-          className="mb-8 flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className={`mb-8 flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
         >
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg 
+            className={`w-5 h-5 ${isRTL ? 'ml-2 rotate-180' : 'mr-2'}`} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           {t('backToItinerary')}
@@ -94,8 +99,8 @@ const CityPage = ({ city, onBack }) => {
 
         {/* Quick Info */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-4">{t('quickInfo')}</h2>
-          <p className="text-gray-700 leading-relaxed">{t(city.shortDescription)}</p>
+          <h2 className={`text-2xl font-bold mb-4 ${isRTL ? 'text-right' : 'text-left'}`}>{t('quickInfo')}</h2>
+          <p className={`text-gray-700 leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>{t(city.shortDescription)}</p>
           
           <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-3 bg-blue-50 rounded-lg">
@@ -123,8 +128,8 @@ const CityPage = ({ city, onBack }) => {
 
         {/* Highlights */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-4">{t('highlights')}</h2>
-          <div className="flex flex-wrap gap-3">
+          <h2 className={`text-2xl font-bold mb-4 ${isRTL ? 'text-right' : 'text-left'}`}>{t('highlights')}</h2>
+          <div className={`flex flex-wrap gap-3 ${isRTL ? 'justify-end' : 'justify-start'}`}>
             {city.highlights.map((highlight, index) => (
               <span
                 key={index}
@@ -140,8 +145,8 @@ const CityPage = ({ city, onBack }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {sections.map((section) => (
             <div key={section.id} className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-xl font-bold mb-4 flex items-center">
-                <span className="text-2xl mr-3">{section.icon}</span>
+              <h2 className={`text-xl font-bold mb-4 flex items-center ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}>
+                <span className={`text-2xl ${isRTL ? 'ml-3' : 'mr-3'}`}>{section.icon}</span>
                 {t(section.title)}
               </h2>
               
@@ -149,8 +154,8 @@ const CityPage = ({ city, onBack }) => {
                 {Array.isArray(section.content) ? (
                   <ul className="space-y-2">
                     {section.content.map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-blue-600 mr-2 mt-1">•</span>
+                      <li key={index} className={`flex items-start ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}>
+                        <span className={`text-blue-600 mt-1 ${isRTL ? 'ml-2' : 'mr-2'}`}>•</span>
                         <span className="text-gray-700">{t(item)}</span>
                       </li>
                     ))}
@@ -159,13 +164,13 @@ const CityPage = ({ city, onBack }) => {
                   <div className="space-y-3">
                     {Object.entries(section.content).map(([key, value]) => (
                       <div key={key}>
-                        <h4 className="font-semibold text-gray-800 capitalize">{t(key)}:</h4>
-                        <p className="text-gray-700 ml-4">{t(value)}</p>
+                        <h4 className={`font-semibold text-gray-800 capitalize ${isRTL ? 'text-right' : 'text-left'}`}>{t(key)}:</h4>
+                        <p className={`text-gray-700 ${isRTL ? 'mr-4 text-right' : 'ml-4 text-left'}`}>{t(value)}</p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-700 leading-relaxed">{t(section.content)}</p>
+                  <p className={`text-gray-700 leading-relaxed ${isRTL ? 'text-right' : 'text-left'}`}>{t(section.content)}</p>
                 )}
               </div>
             </div>
@@ -174,20 +179,20 @@ const CityPage = ({ city, onBack }) => {
 
         {/* Emergency Info */}
         <div className="mt-8 bg-red-50 border border-red-200 rounded-xl p-6">
-          <h2 className="text-xl font-bold text-red-800 mb-4 flex items-center">
-            <span className="text-2xl mr-3">🚨</span>
+          <h2 className={`text-xl font-bold text-red-800 mb-4 flex items-center ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}>
+            <span className={`text-2xl ${isRTL ? 'ml-3' : 'mr-3'}`}>🚨</span>
             {t('emergencyInfo')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div>
+            <div className={isRTL ? 'text-right' : 'text-left'}>
               <strong className="text-red-700">{t('emergency')}:</strong>
               <p>911</p>
             </div>
-            <div>
+            <div className={isRTL ? 'text-right' : 'text-left'}>
               <strong className="text-red-700">{t('police')}:</strong>
               <p>101</p>
             </div>
-            <div>
+            <div className={isRTL ? 'text-right' : 'text-left'}>
               <strong className="text-red-700">{t('medical')}:</strong>
               <p>107</p>
             </div>

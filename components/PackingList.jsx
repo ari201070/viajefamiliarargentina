@@ -3,7 +3,7 @@ import { useTranslation } from '../hooks/useTranslation';
 import { getStoredData, setStoredData } from '../utils/storage';
 
 const PackingList = () => {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
   const [category, setCategory] = useState('essential');
@@ -109,8 +109,8 @@ const PackingList = () => {
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">{t('packingList')}</h2>
+      <div className={`flex justify-between items-center mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <h2 className={`text-2xl font-bold ${isRTL ? 'text-right' : 'text-left'}`}>{t('packingList')}</h2>
         <button
           onClick={resetList}
           className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
@@ -121,8 +121,8 @@ const PackingList = () => {
 
       {/* Progress Bar */}
       <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-gray-700">{t('progress')}</span>
+        <div className={`flex justify-between items-center mb-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+          <span className={`text-sm font-medium text-gray-700 ${isRTL ? 'text-right' : 'text-left'}`}>{t('progress')}</span>
           <span className="text-sm text-gray-500">{getProgress()}%</span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
@@ -135,19 +135,20 @@ const PackingList = () => {
 
       {/* Add New Item */}
       <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className={`flex flex-col sm:flex-row gap-2 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
           <input
             type="text"
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && addItem()}
             placeholder={t('addNewItem')}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${isRTL ? 'text-right' : 'text-left'}`}
+            dir={isRTL ? 'rtl' : 'ltr'}
           />
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${isRTL ? 'text-right' : 'text-left'}`}
           >
             {categories.map(cat => (
               <option key={cat.key} value={cat.key}>
@@ -168,10 +169,10 @@ const PackingList = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {categories.map(cat => (
           <div key={cat.key} className="bg-gray-50 rounded-lg p-4">
-            <h3 className="text-lg font-semibold mb-3 flex items-center">
-              <span className="mr-2 text-xl">{cat.icon}</span>
+            <h3 className={`text-lg font-semibold mb-3 flex items-center ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}>
+              <span className={`text-xl ${isRTL ? 'ml-2' : 'mr-2'}`}>{cat.icon}</span>
               {t(cat.key)}
-              <span className="ml-2 text-sm text-gray-500">
+              <span className={`text-sm text-gray-500 ${isRTL ? 'mr-2' : 'ml-2'}`}>
                 ({getItemsByCategory(cat.key).filter(item => item.checked).length}/{getItemsByCategory(cat.key).length})
               </span>
             </h3>
@@ -181,23 +182,23 @@ const PackingList = () => {
                   key={item.id}
                   className={`flex items-center justify-between p-2 rounded ${
                     item.checked ? 'bg-green-100' : 'bg-white'
-                  }`}
+                  } ${isRTL ? 'flex-row-reverse' : ''}`}
                 >
-                  <label className="flex items-center cursor-pointer flex-1">
+                  <label className={`flex items-center cursor-pointer flex-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <input
                       type="checkbox"
                       checked={item.checked}
                       onChange={() => toggleItem(item.id)}
-                      className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className={`h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded ${isRTL ? 'ml-3' : 'mr-3'}`}
                     />
-                    <span className={`${item.checked ? 'line-through text-gray-500' : ''}`}>
+                    <span className={`${item.checked ? 'line-through text-gray-500' : ''} ${isRTL ? 'text-right' : 'text-left'}`}>
                       {item.isDefault ? t(item.name) : item.name}
                     </span>
                   </label>
                   {!item.isDefault && (
                     <button
                       onClick={() => deleteItem(item.id)}
-                      className="ml-2 text-red-600 hover:text-red-800"
+                      className={`text-red-600 hover:text-red-800 ${isRTL ? 'mr-2' : 'ml-2'}`}
                     >
                       ✕
                     </button>
